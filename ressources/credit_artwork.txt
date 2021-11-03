@@ -1,0 +1,10 @@
+
+Ennemi "Smoil" = Slime Animations crée par @Reff_SQ (Pablo Rodriguez), couleurs altérés par Raphaël Boisvert.
+License - http://creativecommons.org/licenses/by/4.0/
+
+Décor, tileset = TAIGA ASSETS PACK v2 par @vnitti (Vicente Nitti)
+License - http://creativecommons.org/licenses/by/4.0/
+
+Joueur = TeamGunner_by_SecretHideous_060519, couleurs altérés par Raphaël Boisvert
+
+

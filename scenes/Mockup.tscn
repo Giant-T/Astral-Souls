@@ -1,10 +1,13 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://ressources/Ennemis/Smoil/Inactif/smoil_inactif.png" type="Texture" id=1]
 [ext_resource path="res://ressources/Ennemis/Smoil/Saut/smoil_saut.png" type="Texture" id=2]
 [ext_resource path="res://ressources/Joueur/Gunner_Green_Crouch.png" type="Texture" id=3]
 [ext_resource path="res://ressources/Joueur/Gunner_Green_Idle.png" type="Texture" id=4]
 [ext_resource path="res://ressources/Decor/taiga_mockup.png" type="Texture" id=5]
+[ext_resource path="res://ressources/Ennemis/Smhuile/Marche/Smuile_marche_sheet.png" type="Texture" id=6]
+[ext_resource path="res://ressources/Ennemis/Smhuile/Mort/Smhuile_mort_sheet.png" type="Texture" id=7]
+[ext_resource path="res://ressources/Ennemis/Smhuile/Inactif/Smhuile_inactif_sheet.png" type="Texture" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -158,6 +161,96 @@ animations = [ {
 "speed": 10.0
 } ]
 
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 8 )
+region = Rect2( 47, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 8 )
+region = Rect2( 94, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 7 )
+region = Rect2( 47, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 7 )
+region = Rect2( 47, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 7 )
+region = Rect2( 94, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 7 )
+region = Rect2( 94, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 100, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 7 )
+region = Rect2( 47, 100, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 6 )
+region = Rect2( 47, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 6 )
+region = Rect2( 94, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 6 )
+region = Rect2( 47, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 6 )
+region = Rect2( 94, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 100, 47, 50 )
+
+[sub_resource type="SpriteFrames" id=53]
+animations = [ {
+"frames": [ SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 36 ) ],
+"loop": true,
+"name": "Inactif",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ) ],
+"loop": false,
+"name": "Mort",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ) ],
+"loop": true,
+"name": "Marche",
+"speed": 5.0
+} ]
+
 [node name="Mockup" type="Node"]
 
 [node name="taiga_mockup" type="TextureRect" parent="."]
@@ -174,21 +267,21 @@ __meta__ = {
 position = Vector2( 725.242, 396.981 )
 scale = Vector2( 2.5, 2.5 )
 frames = SubResource( 5 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="Joueur_inactif" type="AnimatedSprite" parent="."]
 position = Vector2( 638.377, 420.206 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Joueur_accroupi" type="AnimatedSprite" parent="."]
 position = Vector2( 813.457, 420.01 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 15 )
-frame = 6
+frame = 1
 playing = true
 flip_h = true
 
@@ -196,5 +289,21 @@ flip_h = true
 position = Vector2( 484.691, 285.537 )
 scale = Vector2( 2.5, 2.5 )
 frames = SubResource( 34 )
-frame = 4
+frame = 15
+playing = true
+
+[node name="Smhuile" type="AnimatedSprite" parent="."]
+position = Vector2( 118.28, 293.951 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 53 )
+animation = "Inactif"
+playing = true
+flip_h = true
+
+[node name="Smhuile2" type="AnimatedSprite" parent="."]
+position = Vector2( 926.59, 404.824 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 53 )
+animation = "Marche"
+frame = 2
 playing = true

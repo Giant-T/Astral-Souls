@@ -7,7 +7,7 @@
 [ext_resource path="res://ressources/Joueur/Gunner_Green_Jump.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 19.2384, 32.4663 )
+extents = Vector2( 15.213, 30.5332 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -65,15 +65,15 @@ region = Rect2( 48, 0, 48, 48 )
 atlas = ExtResource( 4 )
 region = Rect2( 96, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 5 )
 region = Rect2( 48, 0, 48, 48 )
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="SpriteFrames" id=18]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
@@ -90,7 +90,7 @@ animations = [ {
 "name": "crouch",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 17 ), SubResource( 18 ) ],
+"frames": [ SubResource( 16 ), SubResource( 17 ) ],
 "loop": true,
 "name": "jump",
 "speed": 5.0
@@ -101,18 +101,18 @@ position = Vector2( 381.126, 239.385 )
 script = ExtResource( 2 )
 
 [node name="Collision_joueur" type="CollisionShape2D" parent="."]
-position = Vector2( -0.353561, -3.53553 )
+position = Vector2( -2.949, -0.946 )
 shape = SubResource( 1 )
 
 [node name="Sprite_joueur" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
-frames = SubResource( 16 )
+frames = SubResource( 18 )
 animation = "idle"
-frame = 1
+frame = 4
 playing = true
 
-[node name="Gravity" type="RayCast2D" parent="."]
+[node name="Pieds" type="RayCast2D" parent="."]
 position = Vector2( 0, 20 )
 enabled = true
-cast_to = Vector2( 0, 10 )
+cast_to = Vector2( 0, 9.921 )
 collide_with_areas = true

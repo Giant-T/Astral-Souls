@@ -36,7 +36,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.0156863, 0.0117647, 0.0784314, 0.686275 )
+bg_color = Color( 0.0156863, 0.0117647, 0.0784314, 0.745098 )
 border_width_left = 6
 border_width_top = 6
 border_width_right = 6
@@ -147,8 +147,7 @@ __meta__ = {
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
+frame = 2
 playing = true
 
-[connection signal="animation_finished" from="Boite_dialogue/Image/AnimationPlayer" to="Boite_dialogue" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="tween_completed" from="Boite_dialogue/Panneau/Tween" to="Boite_dialogue" method="_on_Tween_tween_completed"]

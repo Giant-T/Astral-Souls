@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SpecialForces.png-92bbac093a44a2a1fec1e41152d73e34.stex"
+path="res://.import/reunion_scientifique.png-726c0ab37caa76512b9fd03f3d4c6f99.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ressources/Images_intro/SpecialForces.png"
-dest_files=[ "res://.import/SpecialForces.png-92bbac093a44a2a1fec1e41152d73e34.stex" ]
+source_file="res://ressources/Images_intro/reunion_scientifique.png"
+dest_files=[ "res://.import/reunion_scientifique.png-726c0ab37caa76512b9fd03f3d4c6f99.stex" ]
 
 [params]
 

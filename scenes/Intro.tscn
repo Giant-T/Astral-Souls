@@ -1,9 +1,15 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://ressources/Images_intro/noir.png" type="Texture" id=1]
 [ext_resource path="res://ressources/Styles&Polices/Minecraftia-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scripts/Boite_dialogue.gd" type="Script" id=3]
 [ext_resource path="res://ressources/Styles&Polices/curseur.png" type="Texture" id=4]
+[ext_resource path="res://ressources/Joueur/Gunner_Green_Idle.png" type="Texture" id=5]
+[ext_resource path="res://ressources/FX/Teleportation.png" type="Texture" id=6]
+[ext_resource path="res://ressources/Images_intro/blanc.png" type="Texture" id=7]
+[ext_resource path="res://ressources/Sons/BGM/Intro.ogg" type="AudioStream" id=8]
+[ext_resource path="res://ressources/Sons/SE/Teleport1.ogg" type="AudioStream" id=9]
+[ext_resource path="res://ressources/Sons/SE/Teleport2.ogg" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FadeIn"
@@ -12,12 +18,12 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 128.498, 128.498, 128.498, 1 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -80,14 +86,146 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 6 )
+region = Rect2( 480, 0, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 480, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 6 )
+region = Rect2( 480, 480, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 960, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 6 )
+region = Rect2( 480, 960, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 1440, 480, 480 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 6 )
+region = Rect2( 480, 1440, 480, 480 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="Animation" id=20]
+resource_name = "Grandir"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 5 ),
+"transitions": PoolRealArray( 1.07177, 3.03143, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.2, 0.2 ), Vector2( 1.5, 1.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 4, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3.5, 5 ),
+"transitions": PoolRealArray( 1, 5.09824, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 100, 100, 100, 1 ) ]
 }
 
-[node name="Boite_dialogue" type="Control" parent="."]
+[sub_resource type="Animation" id=21]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 128.498, 128.498, 128.498, 1 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "Fades"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 4, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 5 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 5 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 5 )
+region = Rect2( 192, 0, 48, 48 )
+
+[sub_resource type="SpriteFrames" id=28]
+animations = [ {
+"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Intro" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
@@ -95,8 +233,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Image" type="TextureRect" parent="Boite_dialogue"]
-modulate = Color( 0, 0, 0, 1 )
+[node name="Image" type="TextureRect" parent="."]
 margin_right = 852.0
 margin_bottom = 480.0
 texture = ExtResource( 1 )
@@ -106,12 +243,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Boite_dialogue/Image"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Image"]
 pause_mode = 1
 anims/FadeIn = SubResource( 1 )
 anims/Fades = SubResource( 2 )
 
-[node name="Panneau" type="Panel" parent="Boite_dialogue"]
+[node name="Panneau" type="Panel" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -124,7 +261,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Texte" type="RichTextLabel" parent="Boite_dialogue/Panneau"]
+[node name="Texte" type="RichTextLabel" parent="Panneau"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 18.0
@@ -141,13 +278,61 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="Boite_dialogue/Panneau"]
+[node name="Tween" type="Tween" parent="Panneau"]
 
-[node name="Indicateur" type="AnimatedSprite" parent="Boite_dialogue/Panneau"]
+[node name="Indicateur" type="AnimatedSprite" parent="Panneau"]
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 2
+frame = 1
 playing = true
 
-[connection signal="tween_completed" from="Boite_dialogue/Panneau/Tween" to="Boite_dialogue" method="_on_Tween_tween_completed"]
+[node name="Teleportail" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 426, 240 )
+scale = Vector2( 1e-05, 1e-05 )
+frames = SubResource( 19 )
+frame = 6
+playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]
+anims/Grandir = SubResource( 20 )
+
+[node name="Ecran_blanc" type="TextureRect" parent="."]
+modulate = Color( 0, 0, 0, 0 )
+margin_right = 852.0
+margin_bottom = 480.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Ecran_blanc"]
+pause_mode = 1
+anims/FadeIn = SubResource( 21 )
+anims/Fades = SubResource( 22 )
+
+[node name="Texture_joueur" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 426, 240 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 28 )
+frame = 1
+playing = true
+
+[node name="Musique" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Teleportail1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -15.0
+pitch_scale = 0.7
+
+[node name="Teleportail2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -10.0
+pitch_scale = 0.85
+
+[connection signal="tween_completed" from="Panneau/Tween" to="." method="_on_Tween_tween_completed"]

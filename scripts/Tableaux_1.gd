@@ -1,16 +1,28 @@
 extends Node2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var textesTutoriel = [
+	"Utilisez les flèches ou A et D pour vous déplacer.",
+	"Sautez avec flèche vers le haut ou W",
+	"Attention aux piques, surveillez vos PV",
+	"Sautez plus haut en maintenant le bouton"
+]
+
+var imagesTutoriel = [
+	'res://ressources/UI/gauche_droite.png',
+	'res://ressources/UI/saut.png',
+	'res://ressources/UI/piques.png',
+	'res://ressources/UI/gauche_droite.png'
+]
 
 func _ready():
+	init_tutos()
 	set_process(false)
 	animation_entre()
 
 # Continuation de l'animation de l'intro
 func animation_entre():
+	$Panneaux_tuto/Tutoriel_gauche_droite/Area2D/CollisionShape2D.disabled = true
 	$Au_dela/Ecran_blanc.visible = true
 	$Joueur.visible = false
 	$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("Fades")
@@ -23,6 +35,14 @@ func animation_entre():
 	$Au_dela/Interface/AnimationPlayer.play("Entree")
 	set_process(true)
 	$Joueur.set_physics_process(true)
+	$Panneaux_tuto/Tutoriel_gauche_droite/Area2D/CollisionShape2D.disabled = false
+
+func init_tutos():
+	$Panneaux_tuto/Tutoriel_gauche_droite.init(textesTutoriel[0], imagesTutoriel[0])
+	$Panneaux_tuto/Tutoriel_saut.init(textesTutoriel[1], imagesTutoriel[1])
+	$Panneaux_tuto/Tutoriel_piques.init(textesTutoriel[2], imagesTutoriel[2])
+	$Panneaux_tuto/Tutoriel4.init(textesTutoriel[3], imagesTutoriel[3])
+	
 
 func config_camera():
 	if $Joueur/Sprite_joueur.flip_h == true:

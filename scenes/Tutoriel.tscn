@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ressources/Styles&Polices/Minecraftia-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://ressources/UI/gauche_droite.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Panneau_tutoriel.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.380392, 0.266667, 0.196078, 0.588235 )
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.380392, 0.266667, 0.196078, 0.784314 )
+shadow_color = Color( 0, 0, 0, 0.254902 )
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.631373, 0.443137, 0.239216, 0.588235 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+extra_spacing_space = 1
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Entree"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 22 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.574349, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 69.6209, 36.2474 )
+
+[node name="Tutoriel" type="Control"]
+margin_right = 852.0
+margin_bottom = 480.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Contenant_Panneau" type="PanelContainer" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 22.0
+margin_right = 150.0
+margin_bottom = 97.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panneau" type="Panel" parent="Contenant_Panneau"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 145.0
+margin_bottom = 70.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Contenant_Panneau/Panneau"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 137.0
+margin_bottom = 62.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Contenant_Panneau/Panneau/VBoxContainer"]
+margin_top = 5.0
+margin_right = 134.0
+margin_bottom = 29.0
+theme = SubResource( 4 )
+custom_colors/default_color = Color( 0.160784, 0.0901961, 0.101961, 1 )
+text = "Utilisez les flèches ou 
+A et D pour vous déplacer."
+fit_content_height = true
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Contenant_Panneau/Panneau/VBoxContainer"]
+margin_top = 33.0
+margin_right = 134.0
+margin_bottom = 53.0
+texture = ExtResource( 2 )
+stretch_mode = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Contenant_Panneau"]
+anims/Entree = SubResource( 5 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 75, 110 )
+z_index = -1
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 6 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

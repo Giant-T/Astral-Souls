@@ -15,8 +15,8 @@ func _ready():
 func _process(delta):
 	if joueur:
 		$Interface_PV.visible = true
-		$Interface_PV/Etiquette_PV.text = str(joueur.pv)
-		$Interface_PV/Barre_PV.value = joueur.pv
+		#$Interface_PV/Etiquette_PV.text = str(joueur.pv)
+		#$Interface_PV/Barre_PV.value = joueur.pv
 		if objectif:
 			$Interface_Objectif.visible = true
 			distance_objectif = int(sqrt(pow((objectif.position.x - joueur.position.x), 2) + pow((objectif.position.y - joueur.position.y), 2)))

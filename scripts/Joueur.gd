@@ -1,25 +1,44 @@
 extends KinematicBody2D
 
-# Variables #
+# Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var gravite = Vector2.ZERO
+export (int) var pv = 99
+export (int) var pv_max = 99
 export (int) var vitesse_saut = -900
 export (int) var vitesse_max = 250
 export (float) var deceleration = 0.88
 export (int) var acceleration = 40
 var est_au_sol = false
+var pieds_au_sol = false
 var accroupi = false
 var saute = false
 const UP_DIRECTION = Vector2(0, -1)
 
+# Variables en rapport au tir #
+const Balle = preload("res://scenes/Balle.tscn")
+var minuteur = null
+export (float) var delai_balle = 0.2
+var peut_tirer = true
+
+func _ready():
+	# Minuteur pour le delai de tir #
+	minuteur = Timer.new()
+	minuteur.set_one_shot(true)
+	minuteur.set_wait_time(delai_balle)
+	minuteur.connect("timeout", self, "on_timeout_complete")
+	add_child(minuteur)
+
 func _physics_process(delta):
+	collision_pieds_tilemap()
 	recevoir_input()
 	changer_animation()
 	changer_collision()
+	bouger_canon()
 	calc_gravite()
-	se_deplacer()
+	se_deplacer(delta)
 
-# Reçoit les inputs du joueur "
+# Reçoit les inputs du joueur #
 func recevoir_input():
 	if (Input.is_action_pressed("bas")):
 		accroupi = true
@@ -27,32 +46,45 @@ func recevoir_input():
 	if (Input.is_action_just_released("bas")):
 		accroupi = false
 	
-	if (Input.is_action_just_pressed("haut") && ($Pieds.is_colliding() || est_au_sol)):
+	if (Input.is_action_just_pressed("haut") && (pieds_au_sol || est_au_sol)):
 		saute = true
 
 	if (Input.is_action_pressed("droite")):
 		$Sprite_joueur.flip_h = false
+		$Flash_canon.flip_h = false
 		if !accroupi:
 			velocity.x += acceleration
 	elif (Input.is_action_pressed("gauche")):
 		$Sprite_joueur.flip_h = true
+		$Flash_canon.flip_h = true
 		if !accroupi:
 			velocity.x -= acceleration
+	
+	if (Input.is_action_pressed("tirer")):
+		$Flash_canon.visible = true
+		tirer()
+	elif (Input.is_action_just_released("tirer")):
+		$Flash_canon.visible = false
 
-# Fonction qui calcul la gravité infliger au joueur "
+# Fonction qui calcul la gravité infliger au joueur #
 func calc_gravite():
-	if ($Pieds.is_colliding() || est_au_sol):
+	if (pieds_au_sol || est_au_sol):
 		gravite.y = 0
 		if saute:
+			accroupi = false
 			gravite.y = vitesse_saut
-			saute = false
+	elif (Input.is_action_just_released("haut") && saute):
+		saute = false
+		gravite.y /= 2 
 	elif (is_on_ceiling()):
 		gravite.y = acceleration
 	else:
 		gravite.y += acceleration
+	if (gravite.y >= 0 && saute):
+		saute = false
 
 # Fonction qui gere les deplacements du joueur #
-func se_deplacer():
+func se_deplacer(delta):
 	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
@@ -62,7 +94,7 @@ func se_deplacer():
 		if (velocity.length() <= 15):
 			velocity = Vector2.ZERO
 
-# Fonction qui s'occupe de changer les animations du joueur "
+# Fonction qui s'occupe de changer les animations du joueur #
 func changer_animation():
 	if (gravite.y == 0):
 		if accroupi:
@@ -79,12 +111,51 @@ func changer_animation():
 # Fonction qui change la collision du joueur selon sa rotation/accroupi #
 func changer_collision():
 	if ($Sprite_joueur.flip_h):
-		$Collision_joueur.position.x = 2.668
+		$Collision_joueur.position.x = 3
 	else:
-		$Collision_joueur.position.x = -2.668
+		$Collision_joueur.position.x = -3
 	if accroupi:
-		$Collision_joueur.shape.extents.y = 28.569
-		$Collision_joueur.position.y = 1.073
+		$Collision_joueur.shape.extents.y = 28
+		$Collision_joueur.position.y = 1
 	elif (Input.is_action_just_released("bas") && gravite.y == 0):
-		$Collision_joueur.shape.extents.y = 30.533
-		$Collision_joueur.position.y = -0.946
+		$Collision_joueur.shape.extents.y = 30.5
+		$Collision_joueur.position.y = -1
+
+# Fonction qui bouge le canon du joueur selon sa rotaion/accroupi #
+func bouger_canon():
+	if (!$Sprite_joueur.flip_h):
+		$Canon.position.x = 48
+		$Flash_canon.position.x = 44
+	else:
+		$Canon.position.x = -48
+		$Flash_canon.position.x = -44
+	
+	if ($Sprite_joueur.animation == "crouch" && $Sprite_joueur.frame == 2):
+		$Canon.position.y = 2
+		$Flash_canon.position.y = 2
+	else:
+		$Canon.position.y = -4
+		$Flash_canon.position.y = -4
+
+# S'execute lorsque le timer arrive a zero #
+func on_timeout_complete():
+	peut_tirer = true
+	
+# Lorsque le joueur tire #
+func tirer():
+	if peut_tirer:
+		peut_tirer = false
+		var balle = Balle.instance()
+		balle.start($Canon.global_position, $Sprite_joueur.flip_h)
+		get_parent().add_child(balle)
+		minuteur.start()
+
+func collision_pieds_tilemap():
+	if $Pieds.is_colliding():
+		var collider = $Pieds.get_collider()
+		if collider is TileMap:
+			pieds_au_sol = true
+		else:
+			pieds_au_sol = false
+	else:
+		pieds_au_sol = false

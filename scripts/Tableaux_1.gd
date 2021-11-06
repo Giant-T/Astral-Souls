@@ -5,9 +5,13 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	set_process(false)
+	animation_entre()
+
+# Continuation de l'animation de l'intro
+func animation_entre():
+	$Au_dela/Ecran_blanc.visible = true
 	$Joueur.visible = false
 	$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("Fades")
 	while $Au_dela/Ecran_blanc/AnimationPlayer.is_playing():
@@ -16,9 +20,15 @@ func _ready():
 	$Au_dela/Texture_joueur.visible = false
 	$Joueur.visible = true
 	$Musique.play()
+	$Au_dela/Interface/AnimationPlayer.play("Entree")
+	set_process(true)
 	$Joueur.set_physics_process(true)
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func config_camera():
+	if $Joueur/Sprite_joueur.flip_h == true:
+		$Joueur/Camera2D.offset_h = -0.5
+	else:
+		$Joueur/Camera2D.offset_h = 1
+
+func _process(delta):
+	config_camera()

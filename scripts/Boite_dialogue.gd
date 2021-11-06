@@ -23,34 +23,40 @@ var images = [
 
 var index_dialogue = 0
 var terminee = false
+export var secondes_par_lettres = 0.03
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$Musique.play()
 	load_dialog()
 
+# Fonction qui voit au bon défilement de l'intro
 func load_dialog():
 	if index_dialogue < dialogues.size():
 		terminee = false
 		$Panneau.visible = false
+		# Transition Fade out pour changer l'image
 		$Image/AnimationPlayer.play("Fades")
 		while $Image/AnimationPlayer.is_playing():
 			yield($Image/AnimationPlayer, "animation_finished")
 		$Image.texture = load(images[index_dialogue])
+		# Si c'est la dernière image, fait apparaître la sprite du joueur.
 		if index_dialogue == dialogues.size()-1:
 			$Texture_joueur.visible = true
+		# Transition Fade in pour afficher la nouvelle image
 		$Image/AnimationPlayer.play_backwards("Fades")
 		while $Image/AnimationPlayer.is_playing():
 			yield($Image/AnimationPlayer, "animation_finished")
 		$Panneau.visible = true
 		$Panneau/Texte.bbcode_text = dialogues[index_dialogue]
 		$Panneau/Texte.percent_visible = 0
+		# Animation de défilement du dialogue
 		$Panneau/Tween.interpolate_property(
-			$Panneau/Texte, "percent_visible", 0, 1, dialogues[index_dialogue].length()*0.03,
+			$Panneau/Texte, "percent_visible", 0, 1, dialogues[index_dialogue].length()*secondes_par_lettres,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
 		)
 		$Panneau/Tween.start()
 	else:
+		# Transition vers Tableau 1
 		$Musique.stop()
 		$Panneau.visible = false
 		$Teleportail.visible = true
@@ -60,7 +66,10 @@ func load_dialog():
 		while $Teleportail/AnimationPlayer.is_playing():
 			yield($Teleportail/AnimationPlayer, "animation_finished")
 		$Teleportail1.play()
+		while $Teleportail1.is_playing():
+			yield($Teleportail1, "finished")
 		get_tree().change_scene("res://scenes/Tableaux_1.tscn")
+		
 	index_dialogue += 1
 
 func _process(delta):
@@ -68,7 +77,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_accept") and terminee == true:
 		load_dialog()
 	elif Input.is_action_just_pressed("ui_accept") and $Panneau/Tween.is_active() :
-		$Panneau/Tween.seek((dialogues[index_dialogue-1].length()*0.03)-0.01)
+		# Passe le défilement du dialogue
+		$Panneau/Tween.seek((dialogues[index_dialogue-1].length()*secondes_par_lettres)-0.01)
 
 func _on_Tween_tween_completed(object, key):
 	terminee = true

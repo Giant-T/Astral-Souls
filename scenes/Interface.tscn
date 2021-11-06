@@ -1,0 +1,135 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ressources/UI/PV.png" type="Texture" id=1]
+[ext_resource path="res://ressources/Styles&Polices/Minecraftia-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ressources/Images_intro/noir.png" type="Texture" id=3]
+[ext_resource path="res://ressources/UI/Barre_PV.png" type="Texture" id=4]
+[ext_resource path="res://ressources/UI/Baril.png" type="Texture" id=5]
+[ext_resource path="res://scripts/Interface.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 13
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 13
+extra_spacing_space = 1
+font_data = ExtResource( 2 )
+
+[node name="Interface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.111359
+margin_top = -0.111362
+margin_right = -0.111328
+margin_bottom = -0.111359
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Interface_PV" type="NinePatchRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.172549 )
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 252.0
+margin_bottom = 38.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon_PV" type="TextureRect" parent="Interface_PV"]
+margin_left = -0.44545
+margin_top = -0.222725
+margin_right = 12.5546
+margin_bottom = 5.77728
+rect_scale = Vector2( 3, 3 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Etiquette_PV" type="Label" parent="Interface_PV"]
+anchor_left = 0.212
+anchor_right = 0.212
+margin_left = -1.78072
+margin_top = -2.49791
+margin_right = 22.2193
+margin_bottom = 19.5021
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.945098, 0.909804, 1 )
+text = "99"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Barre_PV" type="TextureProgress" parent="Interface_PV"]
+margin_left = 74.0
+margin_right = 228.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 154, 18 )
+max_value = 99.0
+value = 99.0
+texture_progress = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Interface_Objectif" type="NinePatchRect" parent="."]
+margin_left = 20.0
+margin_top = 51.0
+margin_right = 230.0
+margin_bottom = 91.0
+rect_scale = Vector2( 0.8, 0.8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface_Objectif"]
+margin_right = 163.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface_Objectif/VBoxContainer"]
+margin_right = 163.0
+margin_bottom = 19.0
+
+[node name="Icon_Objectif" type="TextureRect" parent="Interface_Objectif/VBoxContainer/HBoxContainer"]
+margin_right = 11.0
+margin_bottom = 19.0
+texture = ExtResource( 5 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nom_Objectif" type="Label" parent="Interface_Objectif/VBoxContainer/HBoxContainer"]
+margin_left = 15.0
+margin_right = 163.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.760784, 0.764706, 0.780392, 1 )
+text = "Source de pétrole"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Interface_Objectif/VBoxContainer"]
+margin_top = 23.0
+margin_right = 163.0
+margin_bottom = 42.0
+
+[node name="Distance_Objectif" type="Label" parent="Interface_Objectif/VBoxContainer/HBoxContainer2"]
+margin_right = 55.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0.945098, 0.909804, 1 )
+text = " | 109 m"

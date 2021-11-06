@@ -234,8 +234,8 @@ __meta__ = {
 }
 
 [node name="Image" type="TextureRect" parent="."]
-margin_right = 852.0
-margin_bottom = 480.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 7
@@ -271,8 +271,8 @@ margin_bottom = -18.0
 rect_clip_content = false
 theme = SubResource( 5 )
 bbcode_enabled = true
-bbcode_text = "An 2069, la planète Terre subit un [shake rate=10 level=10]déficit sevère[/shake] en [color=red]hydrocarbures[/color]..."
-text = "An 2069, la planète Terre subit un déficit sevère en hydrocarbures..."
+bbcode_text = "An 20XX, la planète Terre subit un [shake rate=10 level=10]déficit sevère[/shake] en [color=red]hydrocarbures[/color]..."
+text = "An 20XX, la planète Terre subit un déficit sevère en hydrocarbures..."
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -284,7 +284,7 @@ __meta__ = {
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="Teleportail" type="AnimatedSprite" parent="."]
@@ -292,7 +292,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 1e-05, 1e-05 )
 frames = SubResource( 19 )
-frame = 6
+frame = 5
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]
@@ -300,8 +300,8 @@ anims/Grandir = SubResource( 20 )
 
 [node name="Ecran_blanc" type="TextureRect" parent="."]
 modulate = Color( 0, 0, 0, 0 )
-margin_right = 852.0
-margin_bottom = 480.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 7
@@ -319,11 +319,11 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 28 )
-frame = 1
 playing = true
 
 [node name="Musique" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+volume_db = -5.0
 
 [node name="Teleportail1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )

@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ressources/Images_intro/MenuBG.jpg" type="Texture" id=1]
+[ext_resource path="res://ressources/Images_intro/Title.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Menu_Principal.gd" type="Script" id=3]
+[ext_resource path="res://ressources/Images_intro/MenuBG2.png" type="Texture" id=4]
+[ext_resource path="res://ressources/Styles&Polices/Theme_menu_princ.tres" type="Theme" id=5]
+
+[node name="Menu_principal" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Titre" type="TextureRect" parent="."]
+margin_left = 60.0
+margin_top = 40.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 852, 0 )
+
+[node name="Etoiles" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2( 0.44375, 0.444444 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 820, 0 )
+
+[node name="Planete" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2( 0.44375, 0.444444 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 69.4388
+margin_right = 269.438
+margin_bottom = 480.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Commencer" type="Button" parent="VBoxContainer"]
+margin_top = 193.0
+margin_right = 199.0
+margin_bottom = 238.0
+theme = ExtResource( 5 )
+custom_constants/hseparation = 0
+text = "Commencer"
+align = 0
+
+[node name="Quitter" type="Button" parent="VBoxContainer"]
+margin_top = 242.0
+margin_right = 199.0
+margin_bottom = 287.0
+theme = ExtResource( 5 )
+text = "Quitter"
+align = 0
+
+[connection signal="pressed" from="VBoxContainer/Commencer" to="." method="_on_Commencer_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quitter" to="." method="_on_Quitter_pressed"]

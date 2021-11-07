@@ -12,7 +12,7 @@ var imagesTutoriel = [
 	'res://ressources/UI/gauche_droite.png',
 	'res://ressources/UI/saut.png',
 	'res://ressources/UI/piques.png',
-	'res://ressources/UI/gauche_droite.png'
+	'res://ressources/UI/saut.png'
 ]
 
 func _ready():
@@ -37,18 +37,33 @@ func animation_entre():
 	$Joueur.set_physics_process(true)
 	$Panneaux_tuto/Tutoriel_gauche_droite/Area2D/CollisionShape2D.disabled = false
 
+# Configuration des tutoriels
 func init_tutos():
 	$Panneaux_tuto/Tutoriel_gauche_droite.init(textesTutoriel[0], imagesTutoriel[0])
 	$Panneaux_tuto/Tutoriel_saut.init(textesTutoriel[1], imagesTutoriel[1])
 	$Panneaux_tuto/Tutoriel_piques.init(textesTutoriel[2], imagesTutoriel[2])
-	$Panneaux_tuto/Tutoriel4.init(textesTutoriel[3], imagesTutoriel[3])
-	
+	$Panneaux_tuto/Tutoriel_saut_maintenu.init(textesTutoriel[3], imagesTutoriel[3])
 
+# ajuste la camera pour voir plus en avant du personnage
 func config_camera():
 	if $Joueur/Sprite_joueur.flip_h == true:
 		$Joueur/Camera2D.offset_h = -0.5
 	else:
 		$Joueur/Camera2D.offset_h = 1
 
+# Gestion du menu de pause
+func menu_pause():
+	if Input.is_action_pressed("pause"):
+		$Au_dela/Menu_pause.pause = true
+		$Joueur.set_physics_process(false)
+		set_process(false)
+		$Au_dela/Menu_pause/VBoxContainer/Reprendre.grab_focus()
+		yield($Au_dela/Menu_pause/VBoxContainer/Reprendre, "pressed")
+		$Au_dela/Menu_pause.pause = false
+		$Joueur.set_physics_process(true)
+		set_process(true)
+
+
 func _process(delta):
 	config_camera()
+	menu_pause()

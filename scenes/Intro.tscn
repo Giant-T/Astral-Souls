@@ -284,7 +284,6 @@ __meta__ = {
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 2
 playing = true
 
 [node name="Teleportail" type="AnimatedSprite" parent="."]
@@ -292,7 +291,6 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 1e-05, 1e-05 )
 frames = SubResource( 19 )
-frame = 3
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]
@@ -319,7 +317,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 28 )
-frame = 4
+frame = 1
 playing = true
 
 [node name="Musique" type="AudioStreamPlayer" parent="."]

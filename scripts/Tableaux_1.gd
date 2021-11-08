@@ -51,19 +51,5 @@ func config_camera():
 	else:
 		$Joueur/Camera2D.offset_h = 1
 
-# Gestion du menu de pause
-func menu_pause():
-	if Input.is_action_pressed("pause"):
-		$Au_dela/Menu_pause.pause = true
-		$Joueur.set_physics_process(false)
-		set_process(false)
-		$Au_dela/Menu_pause/VBoxContainer/Reprendre.grab_focus()
-		yield($Au_dela/Menu_pause/VBoxContainer/Reprendre, "pressed")
-		$Au_dela/Menu_pause.pause = false
-		$Joueur.set_physics_process(true)
-		set_process(true)
-
-
 func _process(delta):
 	config_camera()
-	menu_pause()

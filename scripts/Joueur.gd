@@ -36,7 +36,7 @@ func _physics_process(delta):
 	changer_collision()
 	bouger_canon()
 	calc_gravite()
-	se_deplacer(delta)
+	se_deplacer()
 
 # Reçoit les inputs du joueur #
 func recevoir_input():
@@ -63,7 +63,7 @@ func recevoir_input():
 	if (Input.is_action_pressed("tirer")):
 		$Flash_canon.visible = true
 		tirer()
-	elif (Input.is_action_just_released("tirer")):
+	else:
 		$Flash_canon.visible = false
 
 # Fonction qui calcul la gravité infliger au joueur #
@@ -84,7 +84,7 @@ func calc_gravite():
 		saute = false
 
 # Fonction qui gere les deplacements du joueur #
-func se_deplacer(delta):
+func se_deplacer():
 	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
@@ -105,7 +105,7 @@ func changer_animation():
 		else:
 			$Sprite_joueur.animation = "running"
 			
-	if (!$Pieds.is_colliding() && !est_au_sol):
+	if (!pieds_au_sol && !est_au_sol):
 		$Sprite_joueur.animation = "jump"
 
 # Fonction qui change la collision du joueur selon sa rotation/accroupi #
@@ -131,8 +131,11 @@ func bouger_canon():
 		$Flash_canon.position.x = -44
 	
 	if ($Sprite_joueur.animation == "crouch" && $Sprite_joueur.frame == 2):
-		$Canon.position.y = 2
-		$Flash_canon.position.y = 2
+		$Canon.position.y = 5
+		$Flash_canon.position.y = 5
+	elif ($Sprite_joueur.animation == "running" && ($Sprite_joueur.frame == 1 || $Sprite_joueur.frame == 3)):
+		$Canon.position.y = -10
+		$Flash_canon.position.y = -10
 	else:
 		$Canon.position.y = -4
 		$Flash_canon.position.y = -4
@@ -159,3 +162,14 @@ func collision_pieds_tilemap():
 			pieds_au_sol = false
 	else:
 		pieds_au_sol = false
+
+func recevoir_degat(degat:int):
+	if !$Sprite_joueur/AnimationPlayer.is_playing():
+		pv -= degat
+		if (pv <= 0):
+			mourir()
+		else:
+			$Sprite_joueur/AnimationPlayer.play("degat")
+
+func mourir():
+	pass

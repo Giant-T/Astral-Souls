@@ -19,22 +19,35 @@ const UP_DIRECTION = Vector2(0, -1)
 export (int) var pv = 99
 export (int) var pv_max = 99
 
+# Variables saut genereux #
+var minuteur_saut = null
+export (float) var delai_saut = 0.1
+var peut_sauter = false
+
 # Variables en rapport au tir #
 const Balle = preload("res://scenes/Balle.tscn")
-var minuteur = null
+var minuteur_tir = null
 export (float) var delai_balle = 0.2
 var peut_tirer = true
 
 func _ready():
-	# Minuteur pour le delai de tir #
-	minuteur = Timer.new()
-	minuteur.set_one_shot(true)
-	minuteur.set_wait_time(delai_balle)
-	minuteur.connect("timeout", self, "on_timeout_complete")
-	add_child(minuteur)
+	# minuteur_tir pour le delai de tir #
+	minuteur_tir = Timer.new()
+	minuteur_tir.set_one_shot(true)
+	minuteur_tir.set_wait_time(delai_balle)
+	minuteur_tir.connect("timeout", self, "on_timeout_complete")
+	add_child(minuteur_tir)
+	
+	# minuteur saut genereux #
+	minuteur_saut = Timer.new()
+	minuteur_saut.set_one_shot(true)
+	minuteur_saut.set_wait_time(delai_saut)
+	minuteur_saut.connect("timeout", self, "reset_saut")
+	add_child(minuteur_saut)
 
 func _physics_process(delta):
 	collision_pieds_tilemap()
+	verif_peut_sauter()
 	recevoir_input()
 	changer_animation()
 	changer_collision()
@@ -50,7 +63,7 @@ func recevoir_input():
 	if (Input.is_action_just_released("bas")):
 		accroupi = false
 	
-	if (Input.is_action_just_pressed("haut") && (pieds_au_sol || est_au_sol)):
+	if (Input.is_action_just_pressed("haut") && peut_sauter):
 		saute = true
 
 	if (Input.is_action_pressed("droite")):
@@ -63,7 +76,7 @@ func recevoir_input():
 		$Flash_canon.flip_h = true
 		if !accroupi:
 			velocity.x -= acceleration
-
+	
 	if (Input.is_action_pressed("tirer")):
 		$Flash_canon.visible = true
 		tirer()
@@ -75,9 +88,6 @@ func calc_gravite():
 	est_au_sol = is_on_floor()
 	if (pieds_au_sol || est_au_sol):
 		gravite.y = 0
-		if saute:
-			accroupi = false
-			gravite.y = vitesse_saut
 	elif (Input.is_action_just_released("haut") && saute):
 		saute = false
 		gravite.y /= 2 
@@ -85,8 +95,20 @@ func calc_gravite():
 		gravite.y = acceleration
 	else:
 		gravite.y += acceleration
-	if (gravite.y >= 0 && saute):
-		saute = false
+	
+	if ((est_au_sol || pieds_au_sol || peut_sauter) && saute):
+		peut_sauter = false
+		accroupi = false
+		gravite.y = vitesse_saut
+
+func verif_peut_sauter():
+	if (est_au_sol || pieds_au_sol):
+		peut_sauter = true
+	elif (peut_sauter && minuteur_saut.is_stopped()):
+		minuteur_saut.start()
+
+func reset_saut():
+	peut_sauter = false
 
 # Fonction qui gere les deplacements du joueur #
 func se_deplacer():
@@ -156,7 +178,7 @@ func tirer():
 		var balle = Balle.instance()
 		balle.start($Canon.global_position, $Sprite_joueur.flip_h, accroupi)
 		get_parent().add_child(balle)
-		minuteur.start()
+		minuteur_tir.start()
 
 func collision_pieds_tilemap():
 	if $Pieds.is_colliding():

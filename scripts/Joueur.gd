@@ -3,17 +3,21 @@ extends KinematicBody2D
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var gravite = Vector2.ZERO
-export (int) var pv = 99
-export (int) var pv_max = 99
 export (int) var vitesse_saut = -900
 export (int) var vitesse_max = 250
 export (float) var deceleration = 0.88
 export (int) var acceleration = 40
+export (int) var y_vide = 605
+
 var est_au_sol = false
 var pieds_au_sol = false
 var accroupi = false
 var saute = false
+
 const UP_DIRECTION = Vector2(0, -1)
+
+export (int) var pv = 99
+export (int) var pv_max = 99
 
 # Variables en rapport au tir #
 const Balle = preload("res://scenes/Balle.tscn")
@@ -59,7 +63,7 @@ func recevoir_input():
 		$Flash_canon.flip_h = true
 		if !accroupi:
 			velocity.x -= acceleration
-	
+
 	if (Input.is_action_pressed("tirer")):
 		$Flash_canon.visible = true
 		tirer()
@@ -68,6 +72,7 @@ func recevoir_input():
 
 # Fonction qui calcul la gravité infliger au joueur #
 func calc_gravite():
+	est_au_sol = is_on_floor()
 	if (pieds_au_sol || est_au_sol):
 		gravite.y = 0
 		if saute:
@@ -89,7 +94,7 @@ func se_deplacer():
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
 		move_and_slide(velocity + gravite, UP_DIRECTION)
-		est_au_sol = is_on_floor()
+		verif_tomber_vide()
 		velocity *= deceleration
 		if (velocity.length() <= 15):
 			velocity = Vector2.ZERO
@@ -143,13 +148,13 @@ func bouger_canon():
 # S'execute lorsque le timer arrive a zero #
 func on_timeout_complete():
 	peut_tirer = true
-	
+
 # Lorsque le joueur tire #
 func tirer():
 	if peut_tirer:
 		peut_tirer = false
 		var balle = Balle.instance()
-		balle.start($Canon.global_position, $Sprite_joueur.flip_h)
+		balle.start($Canon.global_position, $Sprite_joueur.flip_h, accroupi)
 		get_parent().add_child(balle)
 		minuteur.start()
 
@@ -170,6 +175,10 @@ func recevoir_degat(degat:int):
 			mourir()
 		else:
 			$Sprite_joueur/AnimationPlayer.play("degat")
+
+func verif_tomber_vide():
+	if (position.y >= y_vide):
+		mourir()
 
 func mourir():
 	pass

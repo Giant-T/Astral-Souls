@@ -27,10 +27,10 @@ export var secondes_par_lettres = 0.03
 
 func _ready():
 	$Musique.play()
-	load_dialog()
+	charger_dialogues()
 
 # Fonction qui voit au bon défilement de l'intro
-func load_dialog():
+func charger_dialogues():
 	if index_dialogue < dialogues.size():
 		terminee = false
 		$Panneau.visible = false
@@ -57,17 +57,17 @@ func load_dialog():
 		$Panneau/Tween.start()
 	else:
 		# Transition vers Tableau 1
+		set_process(false)
 		$Musique.stop()
 		$Panneau.visible = false
 		$Teleportail.visible = true
 		$Ecran_blanc/AnimationPlayer.play("Fades")
 		$Teleportail/AnimationPlayer.play("Grandir")
 		$Teleportail2.play()
-		while $Teleportail/AnimationPlayer.is_playing():
-			yield($Teleportail/AnimationPlayer, "animation_finished")
+		yield($Teleportail2, "finished")
 		$Teleportail1.play()
-		while $Teleportail1.is_playing():
-			yield($Teleportail1, "finished")
+		yield($Teleportail1, "finished")
+		yield($Teleportail/AnimationPlayer, "animation_finished")
 		get_tree().change_scene("res://scenes/Tableaux_1.tscn")
 		
 	index_dialogue += 1
@@ -75,7 +75,7 @@ func load_dialog():
 func _process(delta):
 	$Panneau/Indicateur.visible = terminee
 	if Input.is_action_just_pressed("ui_accept") and terminee == true:
-		load_dialog()
+		charger_dialogues()
 	elif Input.is_action_just_pressed("ui_accept") and $Panneau/Tween.is_active() :
 		# Passe le défilement du dialogue
 		$Panneau/Tween.seek((dialogues[index_dialogue-1].length()*secondes_par_lettres)-0.01)

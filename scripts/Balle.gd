@@ -8,6 +8,7 @@ func start(pos, est_tourne):
 	position = pos
 	if est_tourne:
 		velocity = Vector2(vitesse, 0).rotated(PI)
+		$Sprite_balle.flip_h = true
 	else:
 		velocity = Vector2(vitesse, 0)
 

@@ -6,7 +6,7 @@ func _ready():
 	$VBoxContainer/Commencer.grab_focus()
 
 # Gère le défilement des parallaxes
-func _process(delta):
+func _process(_delta):
 	$ParallaxBackground/ParallaxLayer.motion_offset.x += 0.2
 	$ParallaxBackground/ParallaxLayer2.motion_offset.x -= 0.5
 

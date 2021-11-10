@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ressources/Images_intro/noir.png" type="Texture" id=1]
 [ext_resource path="res://ressources/Styles&Polices/Minecraftia-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://scripts/Boite_dialogue.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Intro.gd" type="Script" id=3]
 [ext_resource path="res://ressources/Styles&Polices/curseur.png" type="Texture" id=4]
 [ext_resource path="res://ressources/Joueur/Gunner_Green_Idle.png" type="Texture" id=5]
 [ext_resource path="res://ressources/FX/Teleportation.png" type="Texture" id=6]
@@ -127,7 +127,6 @@ animations = [ {
 } ]
 
 [sub_resource type="Animation" id=20]
-resource_name = "Grandir"
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -167,7 +166,6 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=21]
-resource_name = "FadeIn"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -182,7 +180,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=22]
-resource_name = "Fades"
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -284,6 +281,7 @@ __meta__ = {
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
+frame = 1
 playing = true
 
 [node name="Teleportail" type="AnimatedSprite" parent="."]
@@ -291,7 +289,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 1e-05, 1e-05 )
 frames = SubResource( 19 )
-frame = 1
+frame = 6
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]
@@ -318,7 +316,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 28 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="Musique" type="AudioStreamPlayer" parent="."]

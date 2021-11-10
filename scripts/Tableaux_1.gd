@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var joueur = get_node_or_null("Joueur")
+
 
 var textesTutoriel = [
 	"Utilisez les flèches ou A et D pour vous déplacer.",
@@ -53,3 +55,4 @@ func config_camera():
 
 func _process(delta):
 	config_camera()
+

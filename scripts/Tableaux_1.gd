@@ -56,3 +56,6 @@ func config_camera():
 func _process(delta):
 	config_camera()
 
+func _on_Porte_body_entered(body):
+	if body == joueur:
+		get_tree().change_scene("res://scenes/Menu_Principal.tscn")

@@ -5,7 +5,8 @@
 [ext_resource path="res://ressources/Ennemis/Smoil/Mort/smoil_mort.png" type="Texture" id=3]
 [ext_resource path="res://ressources/FX/muzzle_flash.png" type="Texture" id=6]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.1042, 9.06635 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -107,15 +108,15 @@ position = Vector2( 381.126, 239.385 )
 script = ExtResource( 2 )
 
 [node name="Collision_smoil" type="CollisionShape2D" parent="."]
-position = Vector2( 1.79, 31.091 )
-scale = Vector2( 2.006, 1.309 )
+position = Vector2( 1.79, 30.977 )
+scale = Vector2( 1.631, 1.217 )
 shape = SubResource( 1 )
 
 [node name="Sprite_smoil" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 18 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="Pieds" type="RayCast2D" parent="."]
@@ -133,5 +134,11 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 21 )
 frame = 1
 playing = true
+
+[node name="Face" type="RayCast2D" parent="."]
+position = Vector2( 14.496, 31.647 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 9.921 )
 
 [connection signal="animation_finished" from="Sprite_smoil" to="." method="_on_Sprite_smoil_animation_finished"]

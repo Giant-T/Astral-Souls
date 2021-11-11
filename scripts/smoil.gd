@@ -15,39 +15,38 @@ var pieds_au_sol = true
 var accroupi = false
 var saute = false
 var gauche = false
-var vielle_pos
 const UP_DIRECTION = Vector2(0, -1)
 
-# Variables en rapport au tir #
-const Balle = preload("res://scenes/Balle.tscn")
-var minuteur = null
-export (float) var delai_balle = 0.2
-var peut_tirer = true
-
 func _ready():
-	# Minuteur pour le delai de tir #
-	minuteur = Timer.new()
-	minuteur.set_one_shot(true)
-	minuteur.set_wait_time(delai_balle)
-	minuteur.connect("timeout", self, "on_timeout_complete")
-	add_child(minuteur)
-	vielle_pos = self.position
+	pass
 
 func _physics_process(delta):
 	collision_pieds_tilemap()
 	recevoir_input()
-	changer_collision()
 	calc_gravite()
 	se_deplacer()
 	gauche_droite()
 
 func gauche_droite():
-	if(!pieds_au_sol||vielle_pos == self.position):
+	if(!pieds_au_sol):
 		$Pieds.position.x -= $Pieds.position.x *2
+		$Face.position.x -= $Face.position.x *2
+		$Face.rotation_degrees += 180
 		if(gauche):
 			gauche =false
 		else:
 			gauche = true
+	elif($Face.is_colliding()):
+		print_debug($Face.get_collider().name.match("**Joueur****"))
+		if (!$Face.get_collider().name.match("**Joueur****")):
+			$Pieds.position.x -= $Pieds.position.x *2
+			$Face.position.x -= $Face.position.x *2
+			$Face.rotation_degrees += 180
+			if(gauche):
+				gauche =false
+			else:
+				gauche = true
+		
 
 
 # Reçoit les inputs du smoil #
@@ -89,25 +88,6 @@ func se_deplacer():
 			velocity = Vector2.ZERO
 
 
-# Fonction qui change la collision du smoil selon sa rotation/accroupi #
-func changer_collision():
-	if ($Sprite_smoil.flip_h):
-		$Collision_smoil.position.x = 3
-	else:
-		$Collision_smoil.position.x = -3
-	
-# S'execute lorsque le timer arrive a zero #
-func on_timeout_complete():
-	peut_tirer = true
-	
-# Lorsque le smoil tire #
-func tirer():
-	if peut_tirer:
-		peut_tirer = false
-		var balle = Balle.instance()
-		balle.start($Canon.global_position, $Sprite_smoil.flip_h)
-		get_parent().add_child(balle)
-		minuteur.start()
 
 func collision_pieds_tilemap():
 	if $Pieds.is_colliding():

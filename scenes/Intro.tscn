@@ -289,7 +289,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 1e-05, 1e-05 )
 frames = SubResource( 19 )
-frame = 2
+frame = 3
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]

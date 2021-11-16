@@ -3,6 +3,7 @@ extends KinematicBody2D
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var gravite = Vector2.ZERO
+var knockback = Vector2.ZERO
 export (int) var vitesse_saut = -900
 export (int) var vitesse_max = 250
 export (float) var deceleration = 0.88
@@ -92,7 +93,7 @@ func calc_gravite():
 		gravite.y = vitesse_saut
 		est_au_sol = false
 		pieds_au_sol = false
-		
+	
 	if (pieds_au_sol || est_au_sol):
 		gravite.y = 0
 	elif (Input.is_action_just_released("haut") && saute):
@@ -103,7 +104,8 @@ func calc_gravite():
 	else:
 		gravite.y += acceleration
 	
-	
+	if (gravite.y > 0 && saute):
+		saute = false
 
 func verif_peut_sauter():
 	if (est_au_sol || pieds_au_sol):
@@ -119,9 +121,10 @@ func se_deplacer():
 	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
-		move_and_slide(velocity + gravite, UP_DIRECTION)
+		move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
 		verif_tomber_vide()
 		velocity *= deceleration
+		knockback *= deceleration
 		if (velocity.length() <= 15):
 			velocity = Vector2.ZERO
 
@@ -194,17 +197,20 @@ func collision_pieds_tilemap():
 	else:
 		pieds_au_sol = false
 
-func recevoir_degat(degat:int):
+func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knockback = 0):
 	if !$Sprite_joueur/AnimationPlayer.is_playing():
 		pv -= degat
 		if (pv <= 0):
 			mourir()
 		else:
 			$Sprite_joueur/AnimationPlayer.play("degat")
+			force_knockback *= 500
+			knockback =  Vector2(force_knockback, 0).rotated(position.angle_to(position_degat) + PI)
 
 func verif_tomber_vide():
 	if (position.y >= y_vide):
 		mourir()
 
 func mourir():
-	pass
+	if ($Sprite_joueur.animation == "die"):
+		$Sprite_joueur.play("die")

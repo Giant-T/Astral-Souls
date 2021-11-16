@@ -86,20 +86,24 @@ func recevoir_input():
 # Fonction qui calcul la gravité infliger au joueur #
 func calc_gravite():
 	est_au_sol = is_on_floor()
+	if ((est_au_sol || pieds_au_sol || peut_sauter) && saute):
+		peut_sauter = false
+		accroupi = false
+		gravite.y = vitesse_saut
+		est_au_sol = false
+		pieds_au_sol = false
+		
 	if (pieds_au_sol || est_au_sol):
 		gravite.y = 0
 	elif (Input.is_action_just_released("haut") && saute):
 		saute = false
-		gravite.y /= 2 
+		gravite.y /= 2
 	elif (is_on_ceiling()):
 		gravite.y = acceleration
 	else:
 		gravite.y += acceleration
 	
-	if ((est_au_sol || pieds_au_sol || peut_sauter) && saute):
-		peut_sauter = false
-		accroupi = false
-		gravite.y = vitesse_saut
+	
 
 func verif_peut_sauter():
 	if (est_au_sol || pieds_au_sol):

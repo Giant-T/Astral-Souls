@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://ressources/Decor/Tileset.png" type="Texture" id=1]
 [ext_resource path="res://ressources/Decor/Props.png" type="Texture" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://scenes/Menu_pause.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scripts/Zones_dommages.gd" type="Script" id=17]
 [ext_resource path="res://scenes/smoil.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/medoil.tscn" type="PackedScene" id=19]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FadeIn"
@@ -995,6 +996,11 @@ position = Vector2( 3308.21, -266.667 )
 
 [node name="Smoil4" parent="." instance=ExtResource( 18 )]
 position = Vector2( 3242.21, -266.667 )
+
+[node name="Medoil" parent="." instance=ExtResource( 19 )]
+modulate = Color( 100, 100, 100, 1 )
+position = Vector2( 3641.02, -1003.63 )
+pv = 3
 
 [connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]
 [connection signal="body_exited" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_exited"]

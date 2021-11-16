@@ -2,28 +2,25 @@ extends KinematicBody2D
 onready var joueur = get_node_or_null("../Joueur")
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
-var temp_velo = velocity
-var gravite = Vector2.ZERO
-var temp_grav= gravite
-export (int) var pv = 99
+var pv
 export (int) var pv_max = 99
-export (int) var vitesse_saut = -900
 export (int) var vitesse_max = 15
 export (float) var deceleration = 0.88
 export (int) var acceleration = 15
 export (int) var damage = 13
 export (bool) var changer_orientation_depart = false
 export (bool) var immovible = false
+export (bool) var attacking_behavior = false
 var est_au_sol = false
 var pieds_au_sol = true
-var accroupi = false
-var saute = false
 var gauche = false
 const UP_DIRECTION = Vector2(0, -1)
 var joueur_range = false 
 var is_attacking = false 
+var bobo_joueur = false
 
 func _ready():
+	pv = pv_max
 	$Sprite_medoil.animation = "idle"
 	if(changer_orientation_depart):
 		changer_zone()
@@ -32,11 +29,10 @@ func _ready():
 
 func _physics_process(delta):
 	collision_pieds_tilemap()
-	calc_gravite()
-	if(joueur_range && pv > 0):
+	if(joueur_range && pv > 0 && attacking_behavior):
 		attacking()
 	if(pv>0 && !immovible && !is_attacking):
-		
+		infliger_degat()
 		recevoir_input()
 		se_deplacer()
 		gauche_droite()
@@ -65,30 +61,15 @@ func recevoir_input():
 	elif (gauche):
 		velocity.x -= acceleration
 	
-	
-# Fonction qui calcul la gravité infliger au medoil #
-func calc_gravite():
-	if (pieds_au_sol || est_au_sol):
-		gravite.y = 0
-		if saute:
-			accroupi = false
-			gravite.y = vitesse_saut
-	elif (is_on_ceiling()):
-		gravite.y = acceleration
-	else:
-		gravite.y += acceleration
-	if (gravite.y >= 0 && saute):
-		saute = false
+
 
 # Fonction qui gere les deplacements du medoil #
 func se_deplacer():
-	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
+	if (velocity != Vector2.ZERO ):
 		velocity.clamped(vitesse_max)
-		gravite.clamped(vitesse_max)
-		move_and_slide(velocity + gravite, UP_DIRECTION)
+		move_and_slide(velocity , UP_DIRECTION)
 		for i in get_slide_count():
 			var collision = get_slide_collision(i)
-			infliger_degat(collision)
 		est_au_sol = is_on_floor()
 		velocity *= deceleration
 		if (velocity.length() <= 15):
@@ -106,9 +87,9 @@ func collision_pieds_tilemap():
 	else:
 		pieds_au_sol = false
 		
-func infliger_degat(collider):
-	if collider.get_collider().name.match("**Joueur****"):
-		collider.get_collider().recevoir_degat(damage)
+func infliger_degat():
+	if bobo_joueur:
+		joueur.recevoir_degat(damage)
 
 
 
@@ -128,6 +109,7 @@ func changer_zone():
 func attacking():
 		$Sprite_medoil.animation = "attack"
 		is_attacking=true
+		infliger_degat()
 		if(joueur_range && ($Sprite_medoil.frame == 9 || $Sprite_medoil.frame == 10)):
 			joueur.recevoir_degat(damage)
 
@@ -148,3 +130,13 @@ func _on_Zone_attack_body_entered(body):
 func _on_Zone_attack_body_exited(body):
 	if body == joueur:
 		joueur_range = false
+
+
+func _on_Hit_box_body_entered(body):
+	if body == joueur:
+		bobo_joueur = true
+
+
+func _on_Hit_box_body_exited(body):
+	if body == joueur:
+		bobo_joueur = false

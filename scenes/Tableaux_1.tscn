@@ -17,7 +17,7 @@
 [ext_resource path="res://scenes/Tutoriel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/Menu_pause.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scripts/Zones_dommages.gd" type="Script" id=17]
-[ext_resource path="res://scenes/smoil.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/medoil.tscn" type="PackedScene" id=19]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FadeIn"
@@ -874,6 +874,7 @@ motion_scale = Vector2( 0.5, 1 )
 motion_mirroring = Vector2( 952, 0 )
 
 [node name="Texture_montagnes" type="Sprite" parent="Couche_arriere/ParallaxBackground/Montagnes"]
+position = Vector2( 82.4069, -50.9424 )
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 5 )
 centered = false
@@ -984,17 +985,19 @@ margin_top = 76.2117
 margin_right = 1896.95
 margin_bottom = 76.2117
 
-[node name="Smoil" parent="." instance=ExtResource( 18 )]
-position = Vector2( 2191.17, 174.212 )
+[node name="Medoil2" parent="." instance=ExtResource( 19 )]
+position = Vector2( 3251.09, -265.881 )
+immovible = false
+attacking_behavior = true
 
-[node name="Smoil2" parent="." instance=ExtResource( 18 )]
-position = Vector2( 3351.42, 406.303 )
+[node name="Medoil" parent="." instance=ExtResource( 19 )]
+position = Vector2( 469.925, 374.674 )
+changer_orientation_depart = false
+immovible = false
 
-[node name="Smoil3" parent="." instance=ExtResource( 18 )]
-position = Vector2( 3308.21, -266.667 )
-
-[node name="Smoil4" parent="." instance=ExtResource( 18 )]
-position = Vector2( 3242.21, -266.667 )
+[node name="Medoil3" parent="." instance=ExtResource( 19 )]
+position = Vector2( 559.77, 375.163 )
+immovible = false
 
 [connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]
 [connection signal="body_exited" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_exited"]

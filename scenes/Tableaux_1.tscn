@@ -790,6 +790,7 @@ anims/Fades = SubResource( 2 )
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
+frame = 3
 playing = true
 
 [node name="Menu_pause" parent="Au_dela" instance=ExtResource( 16 )]
@@ -874,7 +875,6 @@ motion_scale = Vector2( 0.5, 1 )
 motion_mirroring = Vector2( 952, 0 )
 
 [node name="Texture_montagnes" type="Sprite" parent="Couche_arriere/ParallaxBackground/Montagnes"]
-position = Vector2( 82.4069, -50.9424 )
 scale = Vector2( 2.5, 2.5 )
 texture = ExtResource( 5 )
 centered = false
@@ -985,18 +985,23 @@ margin_top = 76.2117
 margin_right = 1896.95
 margin_bottom = 76.2117
 
+[node name="Medoil" parent="." instance=ExtResource( 19 )]
+position = Vector2( 3641.02, -1003.63 )
+pv_max = 3
+
 [node name="Medoil2" parent="." instance=ExtResource( 19 )]
 position = Vector2( 3251.09, -265.881 )
+pv_max = 3
 immovible = false
 attacking_behavior = true
 
-[node name="Medoil" parent="." instance=ExtResource( 19 )]
-position = Vector2( 469.925, 374.674 )
-changer_orientation_depart = false
-immovible = false
-
 [node name="Medoil3" parent="." instance=ExtResource( 19 )]
 position = Vector2( 559.77, 375.163 )
+immovible = false
+
+[node name="Medoil4" parent="." instance=ExtResource( 19 )]
+position = Vector2( 469.925, 374.674 )
+changer_orientation_depart = false
 immovible = false
 
 [connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]

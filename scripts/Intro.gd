@@ -2,11 +2,11 @@ extends Control
 
 var dialogues = [
 	'Année [color=#FFD700]2048[/color] du calendrier grégorien, la planète Terre subit un [shake rate=10 level=10]déficit sévère[/shake] en [color=red]hydrocarbures[/color]...',
-	'Les scientifiques américains ont soulevé la possibité de voyager dans le temps à l\'aide de [color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] afin d\'exploité le pétrole qui n\'a pas été utilisé dans le passé.',
-	'[color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] est le premier prototype de machine à voyager dans le temps. Son nom référence les âmes et les étoiles, puisqu\'il permettra de faire voyager les âmes au delà des étoiles.',
-	'En théorie, ce voyage dans le temps fractionnerais le cours du temps en deux univers parallèles sans créer de paradoxes dans le présent.',
+	'Les scientifiques américains ont soulevé la possibilité de voyager dans le temps à l\'aide de [color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] afin d\'exploiter le pétrole qui n\'a pas été utiliser dans le passé.',
+	'[color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] est le premier prototype de machine à voyager dans le temps. Son nom référence les âmes et les étoiles, puisqu\'il permettra de faire voyager les âmes au-delà des étoiles.',
+	'En théorie, ce voyage dans le temps fractionnerait le cours du temps en deux univers parallèles sans créer de paradoxes dans le présent.',
 	'Les scientifiques ont toutefois souligné que les répercussions et les dangers des voyages dans le temps sont encore trop incertains pour recourir à cette méthode.',
-	'Mais le temps presse et le président des États-Unis doit remedier à la situation, les forces spéciales se sont emparés de [color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] durant la nuit, et vous...',
+	'Mais le temps presse et le président des États-Unis doit remédier à la situation, les forces spéciales se sont emparées de [color=#1CC4D4][tornado radius=3 freq=2]Astral Souls[/tornado][/color] durant la nuit, et vous...',
 	'[shake rate=10 level=10]Vous serez le premier à voyager dans le temps.[/shake]',
 	'Votre mission est simple : placer une porte [color=#1CC4D4][tornado radius=3 freq=2]Astral[/tornado][/color] directement à la source de pétrole pour permettre l\'importation des [color=red]hydrocarbures[/color] de [color=#FFD700]1405[/color].'
 ]

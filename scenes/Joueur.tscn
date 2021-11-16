@@ -180,6 +180,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 26 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite_joueur"]
@@ -198,4 +199,5 @@ visible = false
 position = Vector2( 44, -4 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 30 )
+frame = 1
 playing = true

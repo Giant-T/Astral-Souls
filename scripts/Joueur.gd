@@ -1,21 +1,22 @@
 extends KinematicBody2D
 
 # Variables en rapport au mouvement #
-var velocity = Vector2.ZERO
-var gravite = Vector2.ZERO
-var knockback = Vector2.ZERO
+var velocity:Vector2 = Vector2.ZERO
+var gravite:Vector2 = Vector2.ZERO
+var knockback:Vector2 = Vector2.ZERO
 export (int) var vitesse_saut = -900
 export (int) var vitesse_max = 250
 export (float) var deceleration = 0.88
 export (int) var acceleration = 40
 export (int) var y_vide = 605
 
-var est_au_sol = false
-var pieds_au_sol = false
-var accroupi = false
-var saute = false
+var est_au_sol:bool = false
+var pieds_au_sol:bool = false
+var accroupi:bool = false
+var saute:bool = false
+var est_mort:bool = false
 
-const UP_DIRECTION = Vector2(0, -1)
+const UP_DIRECTION:Vector2 = Vector2(0, -1)
 
 export (int) var pv = 99
 export (int) var pv_max = 99
@@ -23,13 +24,13 @@ export (int) var pv_max = 99
 # Variables saut genereux #
 var minuteur_saut = null
 export (float) var delai_saut = 0.1
-var peut_sauter = false
+var peut_sauter:bool = false
 
 # Variables en rapport au tir #
 const Balle = preload("res://scenes/Balle.tscn")
 var minuteur_tir = null
 export (float) var delai_balle = 0.2
-var peut_tirer = true
+var peut_tirer:bool = true
 
 func _ready():
 	# minuteur_tir pour le delai de tir #
@@ -48,11 +49,13 @@ func _ready():
 
 func _physics_process(delta):
 	collision_pieds_tilemap()
-	verif_peut_sauter()
-	recevoir_input()
-	changer_animation()
-	changer_collision()
-	bouger_canon()
+	if (!est_mort):
+		verif_peut_sauter()
+		recevoir_input()
+		changer_animation()
+		changer_collision()
+		bouger_canon()
+		verif_tomber_vide()
 	calc_gravite()
 	se_deplacer()
 
@@ -122,7 +125,6 @@ func se_deplacer():
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
 		move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
-		verif_tomber_vide()
 		velocity *= deceleration
 		knockback *= deceleration
 		if (velocity.length() <= 15):
@@ -199,10 +201,12 @@ func collision_pieds_tilemap():
 
 func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knockback = 0):
 	if !$Sprite_joueur/AnimationPlayer.is_playing():
-		pv -= degat
-		if (pv <= 0):
+		var pv_temp = pv - degat
+		if (pv_temp <= 0):
+			pv = 0
 			mourir()
 		else:
+			pv = pv_temp
 			$Sprite_joueur/AnimationPlayer.play("degat")
 			force_knockback *= 500
 			knockback =  Vector2(force_knockback, 0).rotated(position.angle_to(position_degat) + PI)
@@ -212,5 +216,6 @@ func verif_tomber_vide():
 		mourir()
 
 func mourir():
-	if ($Sprite_joueur.animation == "die"):
+	if ($Sprite_joueur.animation != "die"):
+		est_mort = true
 		$Sprite_joueur.play("die")

@@ -15,11 +15,15 @@ func start(pos, est_tourne, est_accroupi):
 	if est_tourne:
 		velocity = Vector2(vitesse, 0).rotated(PI + deg2rad(rotation_rand))
 		$Sprite_balle.flip_h = true
+		$Particule_tir.position.x *= -1
+		$Particule_tir.rotate(PI)
 	else:
 		velocity = Vector2(vitesse, 0).rotated(rotation + deg2rad(rotation_rand))
 
 func _physics_process(delta):
 	mouvement(delta)
+	if ($Collision_balle.disabled && !$Particule_tir.emitting):
+		queue_free()
 
 # S'occupe du mouvement de la balle #
 func mouvement(delta):
@@ -27,7 +31,10 @@ func mouvement(delta):
 	if collision:
 		if (collision.collider.has_method("hit")):
 			collision.collider.hit()
-		queue_free()
+		velocity = Vector2.ZERO
+		$Collision_balle.disabled = true
+		$Sprite_balle.visible = false
+		$Particule_tir.emitting = true
 
 # Lorsque la balle sort de l'ecran elle est detruite #
 func _on_VisibilityNotifier2D_screen_exited():

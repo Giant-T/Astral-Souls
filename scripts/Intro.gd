@@ -68,7 +68,7 @@ func charger_dialogues():
 		$Teleportail1.play()
 		yield($Teleportail1, "finished")
 		yield($Teleportail/AnimationPlayer, "animation_finished")
-		get_tree().change_scene("res://scenes/Tableaux_1.tscn")
+		get_tree().change_scene("res://scenes/Tableau_1.tscn")
 		
 	index_dialogue += 1
 

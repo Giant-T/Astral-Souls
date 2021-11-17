@@ -1,0 +1,260 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://ressources/Decor/Tableau.tres" type="TileSet" id=1]
+[ext_resource path="res://ressources/Sons/BGM/Tableau_2.ogg" type="AudioStream" id=2]
+[ext_resource path="res://ressources/Decor/Middleground.png" type="Texture" id=3]
+[ext_resource path="res://ressources/Sons/BGS/Birds.ogg" type="AudioStream" id=5]
+[ext_resource path="res://ressources/Decor/Background.png" type="Texture" id=6]
+[ext_resource path="res://ressources/Decor/Extension_green.png" type="Texture" id=7]
+[ext_resource path="res://ressources/Decor/Extension_blue.png" type="Texture" id=8]
+[ext_resource path="res://ressources/Images_intro/blanc.png" type="Texture" id=9]
+[ext_resource path="res://scripts/Tableau_2.gd" type="Script" id=11]
+[ext_resource path="res://scripts/Zones_dommages.gd" type="Script" id=12]
+[ext_resource path="res://ressources/Decor/Porte.png" type="Texture" id=13]
+[ext_resource path="res://scenes/Menu_pause.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/Interface.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/Joueur.tscn" type="PackedScene" id=16]
+
+[sub_resource type="Animation" id=1]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 128.498, 128.498, 128.498, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Fades"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 0.241484, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.389679, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -100 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 79.131, 4.66461 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 173.543, 4.66461 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 3.65002, 3.90884 )
+
+[node name="Tableau_2" type="Node2D"]
+script = ExtResource( 11 )
+
+[node name="Au_dela" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Ecran_blanc" type="TextureRect" parent="Au_dela"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -423.306
+margin_top = -236.198
+margin_right = -423.306
+margin_bottom = -236.198
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Au_dela/Ecran_blanc"]
+pause_mode = 1
+anims/FadeIn = SubResource( 1 )
+anims/Fades = SubResource( 2 )
+
+[node name="Menu_pause" parent="Au_dela" instance=ExtResource( 14 )]
+visible = false
+
+[node name="Interface" parent="Au_dela" instance=ExtResource( 15 )]
+margin_left = 0.0
+margin_top = -100.0
+margin_right = -852.0
+margin_bottom = -580.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Au_dela/Interface"]
+anims/Entree = SubResource( 3 )
+
+[node name="Couche_avant" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="Tuiles" type="TileMap" parent="Couche_avant"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 786436, 8, 0 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Couche_avant"]
+layer = 50
+
+[node name="Arbres" type="ParallaxLayer" parent="Couche_avant/ParallaxBackground"]
+motion_scale = Vector2( 1.3, 1 )
+motion_mirroring = Vector2( 1536, 0 )
+
+[node name="Texture_arbres" type="Sprite" parent="Couche_avant/ParallaxBackground/Arbres"]
+modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, 30 )
+
+[node name="Couche_principale" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enable = true
+
+[node name="Tuiles" type="TileMap" parent="Couche_principale"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -131070, 1, 0, -131069, 1, 1, -131068, 1, 2, -131067, 1, 1, -131066, 1, 3, -1, 1, 0, -65536, 1, 2, -65535, 1, 2, -65534, 1, 65537, -65533, 1, 131073, -65532, 1, 131073, -65531, 1, 131073, -65530, 1, 65538, -65529, 1, 2, -65528, 1, 1, -65527, 1, 3, 65534, 1, 0, 65535, 1, 65537, 0, 1, 131073, 1, 1, 131073, 2, 1, 131073, 3, 1, 131073, 4, 1, 131073, 5, 1, 131073, 6, 1, 131073, 7, 1, 131073, 8, 1, 131073, 9, 1, 65538, 10, 1, 2, 11, 1, 1, 12, 1, 3, 16, 1, 0, 17, 1, 1, 18, 1, 1, 19, 1, 3, 131069, 1, 0, 131070, 1, 65537, 131071, 1, 131073, 65536, 1, 131073, 65537, 1, 131073, 65538, 1, 131073, 65539, 1, 131073, 65540, 1, 131073, 65541, 1, 131073, 65542, 1, 131073, 65543, 1, 131073, 65544, 1, 131073, 65545, 1, 131073, 65546, 1, 131073, 65547, 1, 131073, 65548, 1, 65538, 65549, 1, 1, 65550, 1, 1, 65551, 1, 2, 65552, 1, 65537, 65553, 1, 131074, 65554, 1, 196610, 65555, 1, 196611, 196604, 1, 0, 196605, 1, 65537, 196606, 1, 131073, 196607, 1, 131073, 131072, 1, 131073, 131073, 1, 131073, 131074, 1, 131073, 131075, 1, 131073, 131076, 1, 131073, 131077, 1, 131073, 131078, 1, 131073, 131079, 1, 131073, 131080, 1, 131073, 131081, 1, 131073, 131082, 1, 131073, 131083, 1, 131073, 131084, 1, 131073, 131085, 1, 131073, 131086, 1, 131074, 131087, 1, 196610, 131088, 1, 196610, 131089, 1, 196611, 262139, 1, 0, 262140, 1, 65537, 262141, 1, 131073, 262142, 1, 131073, 262143, 1, 131073, 196608, 1, 131073, 196609, 1, 131074, 196610, 1, 196609, 196611, 1, 196609, 196612, 1, 196609, 196613, 1, 196609, 196614, 1, 196609, 196615, 1, 196610, 196616, 1, 131073, 196617, 1, 131073, 196618, 1, 131073, 196619, 1, 131073, 196620, 1, 131073, 196621, 1, 131074, 196622, 1, 196611, 327675, 1, 131072, 327676, 1, 131073, 327677, 1, 131073, 327678, 1, 131073, 327679, 1, 131074, 262144, 1, 196610, 262145, 1, 196611, 262152, 1, 196608, 262153, 1, 196610, 262154, 1, 131073, 262155, 1, 131074, 262156, 1, 196610, 262157, 1, 196611, 393211, 1, 131072, 393212, 1, 131073, 393213, 1, 131073, 393214, 1, 131073, 393215, 1, 65539, 327690, 1, 196608, 327691, 1, 196611, 458746, 1, 0, 458747, 1, 65537, 458748, 1, 131073, 458749, 1, 131073, 458750, 1, 131073, 458751, 1, 65539, 524282, 1, 131072, 524283, 1, 131073, 524284, 1, 131073, 524285, 1, 131073, 524286, 1, 131073, 524287, 1, 65539, 589818, 1, 196608, 589819, 1, 131073, 589820, 1, 131073, 589821, 1, 131073, 589822, 1, 131073, 589823, 1, 65539, 655355, 1, 65536, 655356, 1, 131073, 655357, 1, 131073, 655358, 1, 131073, 655359, 1, 65539, 720891, 1, 131072, 720892, 1, 131073, 720893, 1, 131073, 720894, 1, 131073, 720895, 1, 131075, 786427, 1, 196608, 786428, 1, 131073, 786429, 1, 131073, 786430, 1, 131073, 786431, 1, 65538, 720896, 1, 2, 720897, 1, 3, 720904, 1, 0, 720905, 1, 2, 720906, 1, 2, 720907, 1, 1, 720908, 1, 1, 720909, 1, 2, 720910, 1, 2, 720911, 1, 3, 851964, 1, 65536, 851965, 1, 131073, 851966, 1, 131073, 851967, 1, 131073, 786432, 1, 131073, 786433, 1, 65538, 786434, 1, 2, 786435, 1, 1, 786436, 1, 2, 786437, 1, 1, 786438, 1, 1, 786439, 1, 1, 786440, 1, 65537, 786441, 1, 131073, 786442, 1, 131073, 786443, 1, 131073, 786444, 1, 131073, 786445, 1, 131073, 786446, 1, 131073, 786447, 1, 65538, 786448, 1, 3, 917500, 1, 196608, 917501, 1, 131073, 917502, 1, 131073, 917503, 1, 131073, 851968, 1, 131073, 851969, 1, 131073, 851970, 1, 131073, 851971, 1, 131073, 851972, 1, 131073, 851973, 1, 131073, 851974, 1, 131073, 851975, 1, 131073, 851976, 1, 131073, 851977, 1, 131073, 851978, 1, 131073, 851979, 1, 131073, 851980, 1, 131073, 851981, 1, 131073, 851982, 1, 131073, 851983, 1, 131073, 851984, 1, 131075, 983037, 1, 196608, 983038, 1, 131073, 983039, 1, 131073, 917504, 1, 131073, 917505, 1, 131073, 917506, 1, 131073, 917507, 1, 131073, 917508, 1, 131073, 917509, 1, 131073, 917510, 1, 131073, 917511, 1, 131073, 917512, 1, 131073, 917513, 1, 131073, 917514, 1, 131073, 917515, 1, 131073, 917516, 1, 131073, 917517, 1, 131073, 917518, 1, 131073, 917519, 1, 131074, 917520, 1, 196611, 1048574, 1, 196608, 1048575, 1, 131073, 983040, 1, 131073, 983041, 1, 131073, 983042, 1, 131073, 983043, 1, 131073, 983044, 1, 131073, 983045, 1, 131073, 983046, 1, 131073, 983047, 1, 131073, 983048, 1, 131073, 983049, 1, 131073, 983050, 1, 131073, 983051, 1, 131073, 983052, 1, 131073, 983053, 1, 131073, 983054, 1, 131073, 983055, 1, 131075, 1114111, 1, 131072, 1048576, 1, 131073, 1048577, 1, 131073, 1048578, 1, 131073, 1048579, 1, 131073, 1048580, 1, 131073, 1048581, 1, 131073, 1048582, 1, 131073, 1048583, 1, 131073, 1048584, 1, 131073, 1048585, 1, 131073, 1048586, 1, 131073, 1048587, 1, 131073, 1048588, 1, 131073, 1048589, 1, 131073, 1048590, 1, 131073, 1048591, 1, 65539, 1179647, 1, 65536, 1114112, 1, 131073, 1114113, 1, 131073, 1114114, 1, 131073, 1114115, 1, 131073, 1114116, 1, 131073, 1114117, 1, 131073, 1114118, 1, 131073, 1114119, 1, 131073, 1114120, 1, 131073, 1114121, 1, 131073, 1114122, 1, 131073, 1114123, 1, 131073, 1114124, 1, 131073, 1114125, 1, 131073, 1114126, 1, 131073, 1114127, 1, 131075, 1114139, 1, 0, 1114140, 1, 2, 1114141, 1, 2, 1114142, 1, 2, 1114143, 1, 2, 1114144, 1, 2, 1114145, 1, 1, 1114146, 1, 1, 1114147, 1, 2, 1114148, 1, 2, 1114149, 1, 2, 1114150, 1, 2, 1114151, 1, 3, 1245183, 1, 65536, 1179648, 1, 131073, 1179649, 1, 131073, 1179650, 1, 131073, 1179651, 1, 131073, 1179652, 1, 131073, 1179653, 1, 131073, 1179654, 1, 131073, 1179655, 1, 131073, 1179656, 1, 131073, 1179657, 1, 131073, 1179658, 1, 131073, 1179659, 1, 131073, 1179660, 1, 131073, 1179661, 1, 131073, 1179662, 1, 131073, 1179663, 1, 65539, 1179675, 1, 65536, 1179676, 1, 131073, 1179677, 1, 131073, 1179678, 1, 131073, 1179679, 1, 131073, 1179680, 1, 131073, 1179681, 1, 131073, 1179682, 1, 131073, 1179683, 1, 131073, 1179684, 1, 131073, 1179685, 1, 131073, 1179686, 1, 131073, 1179687, 1, 65539, 1310719, 1, 196608, 1245184, 1, 196610, 1245185, 1, 196610, 1245186, 1, 196610, 1245187, 1, 196610, 1245188, 1, 196610, 1245189, 1, 196610, 1245190, 1, 196610, 1245191, 1, 196610, 1245192, 1, 196609, 1245193, 1, 196609, 1245194, 1, 196610, 1245195, 1, 196609, 1245196, 1, 196609, 1245197, 1, 196610, 1245198, 1, 196609, 1245199, 1, 196611, 1245211, 1, 196608, 1245212, 1, 196609, 1245213, 1, 196609, 1245214, 1, 196610, 1245215, 1, 196609, 1245216, 1, 196610, 1245217, 1, 196609, 1245218, 1, 196609, 1245219, 1, 196610, 1245220, 1, 196609, 1245221, 1, 196610, 1245222, 1, 196610, 1245223, 1, 196611, 1376259, 1, 131073, 1376260, 1, 131073, 1376261, 1, 131073, 1376286, 1, 131073, 1376287, 1, 131073, 1376288, 1, 131073, 1441793, 1, 131073 )
+
+[node name="Zones_dommages" type="Area2D" parent="Couche_principale"]
+script = ExtResource( 12 )
+
+[node name="Piques_1" type="CollisionShape2D" parent="Couche_principale/Zones_dommages"]
+position = Vector2( 976, 492 )
+shape = SubResource( 4 )
+
+[node name="Piques_2" type="CollisionShape2D" parent="Couche_principale/Zones_dommages"]
+position = Vector2( 1391, 493 )
+shape = SubResource( 5 )
+
+[node name="Couche_arriere" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enable = true
+
+[node name="Tuiles" type="TileMap" parent="Couche_arriere"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Couche_arriere"]
+
+[node name="Ciel" type="ParallaxLayer" parent="Couche_arriere/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 952, 480 )
+
+[node name="Texture_ciel" type="Sprite" parent="Couche_arriere/ParallaxBackground/Ciel"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 8 )
+centered = false
+
+[node name="Montagnes" type="ParallaxLayer" parent="Couche_arriere/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 952, 0 )
+
+[node name="Texture_montagnes" type="Sprite" parent="Couche_arriere/ParallaxBackground/Montagnes"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Arbres" type="ParallaxLayer" parent="Couche_arriere/ParallaxBackground"]
+motion_scale = Vector2( 0.65, 1 )
+motion_mirroring = Vector2( 844, 0 )
+
+[node name="Texture_arbres" type="Sprite" parent="Couche_arriere/ParallaxBackground/Arbres"]
+position = Vector2( 0, 60 )
+scale = Vector2( 2.2, 2.2 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Arbres2" type="ParallaxLayer" parent="Couche_arriere/ParallaxBackground"]
+motion_scale = Vector2( 0.8, 1 )
+motion_offset = Vector2( -80, 0 )
+motion_mirroring = Vector2( 952, 0 )
+
+[node name="Texture_arbres" type="Sprite" parent="Couche_arriere/ParallaxBackground/Arbres2"]
+modulate = Color( 0.580392, 0.721569, 0.690196, 1 )
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, 30 )
+
+[node name="Gazon" type="ParallaxLayer" parent="Couche_arriere/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 952, 0 )
+
+[node name="Texture_gazon" type="Sprite" parent="Couche_arriere/ParallaxBackground/Gazon"]
+modulate = Color( 0.580392, 0.721569, 0.690196, 1 )
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 7 )
+centered = false
+offset = Vector2( 0, 245 )
+
+[node name="Joueur" parent="." instance=ExtResource( 16 )]
+position = Vector2( 161.575, 353.307 )
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+current = true
+limit_right = 4100
+limit_bottom = 605
+limit_smoothed = true
+smoothing_enabled = true
+smoothing_speed = 6.0
+drag_margin_left = 0.12
+drag_margin_top = 0.33
+drag_margin_right = 0.12
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="Musique" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -5.0
+
+[node name="BGS" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+
+[node name="Objectif" type="Node2D" parent="."]
+modulate = Color( 0.835294, 0.835294, 0.835294, 1 )
+position = Vector2( 3868.95, -942.953 )
+scale = Vector2( 2, 2 )
+
+[node name="Sprite" type="Sprite" parent="Objectif"]
+z_index = -1
+texture = ExtResource( 13 )
+
+[node name="Porte" type="Area2D" parent="Objectif"]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objectif/Porte"]
+position = Vector2( 0, 16.0103 )
+shape = SubResource( 6 )
+
+[connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]
+[connection signal="body_exited" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_exited"]

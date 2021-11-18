@@ -29,10 +29,10 @@ func _ready():
 
 func _physics_process(delta):
 	collision_pieds_tilemap()
+	infliger_degat()
 	if(joueur_range && pv > 0 && attacking_behavior):
 		attacking()
 	if(pv>0 && !immovible && !is_attacking):
-		infliger_degat()
 		recevoir_input()
 		se_deplacer()
 		gauche_droite()
@@ -96,6 +96,7 @@ func infliger_degat():
 func hit():
 	pv -= 1
 	if(pv< 1):
+		set_physics_process(false)
 		$Sprite_medoil.animation = "mort"
 		joueur_range = false
 		
@@ -124,6 +125,7 @@ func _on_Sprite_medoil_animation_finished():
 func _on_Zone_attack_body_entered(body):
 	if body == joueur:
 		joueur_range = true
+
 		
 
 
@@ -135,6 +137,9 @@ func _on_Zone_attack_body_exited(body):
 func _on_Hit_box_body_entered(body):
 	if body == joueur:
 		bobo_joueur = true
+	elif body.has_method("gone"):
+		body.gone()
+		self.hit()
 
 
 func _on_Hit_box_body_exited(body):

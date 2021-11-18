@@ -29,6 +29,9 @@ func mouvement(delta):
 			collision.collider.hit()
 		queue_free()
 
+func gone():
+	queue_free()
+
 # Lorsque la balle sort de l'ecran elle est detruite #
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	gone()

@@ -57,7 +57,7 @@ func config_camera():
 	else:
 		$Joueur/Camera2D.offset_h = 1
 
-func _process(delta):
+func _process(_delta):
 	config_camera()
 
 func _on_Porte_body_entered(body):

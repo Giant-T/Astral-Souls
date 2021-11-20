@@ -316,6 +316,7 @@ visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 28 )
+frame = 1
 playing = true
 
 [node name="Musique" type="AudioStreamPlayer" parent="."]

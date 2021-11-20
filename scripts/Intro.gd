@@ -72,7 +72,7 @@ func charger_dialogues():
 		
 	index_dialogue += 1
 
-func _process(delta):
+func _process(_delta):
 	$Panneau/Indicateur.visible = terminee
 	if Input.is_action_just_pressed("ui_accept") and terminee == true:
 		charger_dialogues()
@@ -80,5 +80,5 @@ func _process(delta):
 		# Passe le défilement du dialogue
 		$Panneau/Tween.seek((dialogues[index_dialogue-1].length()*secondes_par_lettres)-0.01)
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	terminee = true

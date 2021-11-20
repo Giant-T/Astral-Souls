@@ -6,7 +6,7 @@ var distance_objectif
 var distance_niveau = 4000
 
 
-func _process(delta):
+func _process(_delta):
 	if joueur:
 		$Interface_PV.visible = true
 		$Interface_PV/Etiquette_PV.text = str(joueur.pv)

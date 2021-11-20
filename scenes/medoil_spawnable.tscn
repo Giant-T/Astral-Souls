@@ -1,7 +1,7 @@
 [gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://ressources/Ennemis/Smoil/Inactif/smoil_inactif.png" type="Texture" id=1]
-[ext_resource path="res://scripts/medoil.gd" type="Script" id=2]
+[ext_resource path="res://scripts/medoil_spawnable.gd" type="Script" id=2]
 [ext_resource path="res://ressources/Ennemis/Smoil/Mort/smoil_mort.png" type="Texture" id=3]
 [ext_resource path="res://ressources/Ennemis/Smoil/Attaque/smoil_attaque.png" type="Texture" id=4]
 
@@ -151,6 +151,7 @@ radius = 21.0571
 height = 20.1258
 
 [node name="Medoil" type="KinematicBody2D"]
+position = Vector2( 0, -31.83 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 2 )
@@ -164,7 +165,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 32 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 flip_h = true
 

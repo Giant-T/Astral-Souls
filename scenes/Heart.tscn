@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ressources/Ennemis/Heart/Heart.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Heart.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 23.8678, 46.9451 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 178, 246 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 178, 0, 178, 246 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 356, 0, 178, 246 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 534, 0, 178, 246 )
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=7]
+
+[node name="Heart" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="Collision_Heart" type="CollisionShape2D" parent="."]
+scale = Vector2( 3.737, 5.277 )
+shape = SubResource( 1 )
+
+[node name="Sprite_Heart" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
+frames = SubResource( 6 )
+animation = "idle"
+frame = 2
+playing = true
+flip_h = true
+
+[node name="Pieds" type="RayCast2D" parent="."]
+position = Vector2( 32.476, 41.559 )
+enabled = true
+cast_to = Vector2( 0, 9.921 )
+
+[node name="Face" type="RayCast2D" parent="."]
+position = Vector2( 39.597, 0 )
+rotation = -1.5708
+scale = Vector2( 8.787, 1 )
+enabled = true
+cast_to = Vector2( 0, 9.921 )
+
+[node name="Hit_box" type="Area2D" parent="."]
+
+[node name="Collision_Heart" type="CollisionShape2D" parent="Hit_box"]
+scale = Vector2( 3.737, 5.277 )
+shape = SubResource( 1 )
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="Collision_Heart" type="CollisionShape2D" parent="Detection"]
+scale = Vector2( 200, 100 )
+shape = SubResource( 7 )
+
+[node name="Canon" type="Position2D" parent="."]
+position = Vector2( -76.5339, 31.9298 )
+
+[node name="Slime" type="Position2D" parent="."]
+position = Vector2( -189.671, 63.0424 )
+
+[connection signal="body_entered" from="Hit_box" to="." method="_on_Hit_box_body_entered"]
+[connection signal="body_exited" from="Hit_box" to="." method="_on_Hit_box_body_exited"]
+[connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_Detection_body_exited"]

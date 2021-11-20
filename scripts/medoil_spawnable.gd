@@ -3,14 +3,12 @@ onready var joueur = get_node_or_null("../Joueur")
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var pv
-export (int) var pv_max = 5
-export (int) var vitesse_max = 15
-export (float) var deceleration = 0.88
-export (int) var acceleration = 15
-export (int) var damage = 13
-export (bool) var changer_orientation_depart = false
-export (bool) var immovible = false
-export (bool) var attacking_behavior = false
+var pv_max = 5
+var vitesse_max = 15
+var deceleration = 0.88
+var acceleration = 15
+var damage = 5
+var attacking_behavior = true
 var est_au_sol = false
 var pieds_au_sol = true
 var gauche = false
@@ -19,10 +17,12 @@ var joueur_range = false
 var is_attacking = false 
 var bobo_joueur = false
 
-func _ready():
+
+func start(orientation_depart,spawn_pos):
 	pv = pv_max
+	self.position = spawn_pos
 	$Sprite_medoil.animation = "idle"
-	if(changer_orientation_depart):
+	if(orientation_depart):
 		changer_zone()
 		gauche = true
 	pass
@@ -32,7 +32,7 @@ func _physics_process(delta):
 	infliger_degat()
 	if(joueur_range && pv > 0 && attacking_behavior):
 		attacking()
-	if(pv>0 && !immovible && !is_attacking):
+	if(pv>0 && !is_attacking):
 		recevoir_input()
 		se_deplacer()
 		gauche_droite()
@@ -77,7 +77,6 @@ func se_deplacer():
 			velocity = Vector2.ZERO
 
 
-
 #regarde si il est au sol
 func collision_pieds_tilemap():
 	if $Pieds.is_colliding():
@@ -88,12 +87,10 @@ func collision_pieds_tilemap():
 			pieds_au_sol = false
 	else:
 		pieds_au_sol = false
-		
+#inflige des degat au joueur si il rentre en contanct avec le slime
 func infliger_degat():
 	if bobo_joueur:
 		joueur.recevoir_degat(damage)
-
-
 
 #Fonction qui enleve de la vie si frapper par balle et le tu si 0 pv
 func hit():
@@ -103,15 +100,12 @@ func hit():
 		$Sprite_medoil.animation = "mort"
 		joueur_range = false
 		
-	
 #fait disparaitre le mob
 func mort():
 	self.queue_free()
-	
 #change les hitbox de coter
 func changer_zone():
 	self.scale.x *=-1
-	
 #si le joueur est en porter d'attack fait attacker le slime
 func attacking():
 		$Sprite_medoil.animation = "attack"

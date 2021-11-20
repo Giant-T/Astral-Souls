@@ -36,6 +36,9 @@ func mouvement(delta):
 		$Sprite_balle.visible = false
 		$Particule_tir.emitting = true
 
+func gone():
+	queue_free()
+
 # Lorsque la balle sort de l'ecran elle est detruite #
 func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
+	gone()

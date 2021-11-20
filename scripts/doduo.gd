@@ -8,9 +8,9 @@ export (int) var vitesse_max = 15
 export (float) var deceleration = 0.88
 export (int) var acceleration = 15
 export (int) var damage = 13
+export (int) var balle_degat = 20
 export (bool) var changer_orientation_depart = false
-export (bool) var immovible = false
-export (bool) var attacking_behavior = false
+var immovible = false
 var est_au_sol = false
 var pieds_au_sol = true
 var gauche = false
@@ -18,24 +18,52 @@ const UP_DIRECTION = Vector2(0, -1)
 var joueur_range = false 
 var is_attacking = false 
 var bobo_joueur = false
+var phase = 0
+
+const Balle = preload("res://scenes/Balle_doduo.tscn")
+var minuteur_tir = null
+export (float) var delai_balle = 2
+var peut_tirer = true
+var innactif = true
 
 func _ready():
 	pv = pv_max
 	$Sprite_medoil.animation = "idle"
-	if(changer_orientation_depart):
-		changer_zone()
-		gauche = true
+	changer_zone()
+	gauche = true
+	immovible = false
+		# minuteur_tir pour le delai de tir #
+	minuteur_tir = Timer.new()
+	minuteur_tir.set_one_shot(true)
+	minuteur_tir.set_wait_time(delai_balle)
+	minuteur_tir.connect("timeout", self, "on_timeout_complete")
+	add_child(minuteur_tir)
 	pass
 
 func _physics_process(delta):
-	collision_pieds_tilemap()
-	infliger_degat()
-	if(joueur_range && pv > 0 && attacking_behavior):
-		attacking()
-	if(pv>0 && !immovible && !is_attacking):
-		recevoir_input()
-		se_deplacer()
-		gauche_droite()
+	if !innactif:
+		infliger_degat()
+		collision_pieds_tilemap()
+		if(phase == 0):
+			tirer()
+			if pv < pv_max /3 *2:
+				phase = 1
+		elif (phase == 1):
+			if $Sprite_medoil.animation != "marche":
+				$Sprite_medoil.animation = "marche"
+			recevoir_input()
+			se_deplacer()
+			gauche_droite()
+			if pv < pv_max /3:
+				phase = 2
+				vitesse_max *= 2
+				acceleration *=2
+				minuteur_tir.set_wait_time(delai_balle/2)
+		else:
+			tirer()
+			recevoir_input()
+			se_deplacer()
+			gauche_droite()
 
 func gauche_droite():
 	if(!pieds_au_sol):
@@ -106,32 +134,25 @@ func mort():
 	
 func changer_zone():
 	self.scale.x *=-1
-	
-func attacking():
-		$Sprite_medoil.animation = "attack"
-		is_attacking=true
-		infliger_degat()
-		if(joueur_range && ($Sprite_medoil.frame == 9 || $Sprite_medoil.frame == 10)):
-			joueur.recevoir_degat(damage)
 
+			
+func on_timeout_complete():
+	peut_tirer = true
+	
+func tirer():
+	if peut_tirer:
+		peut_tirer = false
+		var balle = Balle.instance()
+		balle.start(20, $Canon.global_position,  joueur.global_position)
+		get_parent().add_child(balle)
+		minuteur_tir.start()
+			
 func _on_Sprite_medoil_animation_finished():
 	if $Sprite_medoil.animation == "mort":
 		mort()
 	elif $Sprite_medoil.animation == "attack":
 		$Sprite_medoil.animation = "idle"
 		is_attacking = false
-
-
-func _on_Zone_attack_body_entered(body):
-	if body == joueur:
-		joueur_range = true
-
-		
-
-
-func _on_Zone_attack_body_exited(body):
-	if body == joueur:
-		joueur_range = false
 
 
 func _on_Hit_box_body_entered(body):
@@ -141,7 +162,17 @@ func _on_Hit_box_body_entered(body):
 		body.gone()
 		self.hit()
 
-
 func _on_Hit_box_body_exited(body):
 	if body == joueur:
 		bobo_joueur = false
+
+
+func _on_Detection_body_entered(body):
+	
+	if body == joueur:
+		innactif = false
+
+
+func _on_Detection_body_exited(body):
+	if body == joueur:
+		innactif = true

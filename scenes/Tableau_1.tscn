@@ -741,7 +741,7 @@ anims/Fades = SubResource( 2 )
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 4
+frame = 2
 playing = true
 
 [node name="Menu_pause" parent="Au_dela" instance=ExtResource( 17 )]
@@ -957,7 +957,6 @@ attacking_behavior = true
 [node name="Medoil2" parent="." instance=ExtResource( 18 )]
 position = Vector2( 3251.09, -265.881 )
 pv_max = 3
-immovible = false
 attacking_behavior = true
 
 [node name="Medoil3" parent="." instance=ExtResource( 18 )]
@@ -968,18 +967,14 @@ damage = 9
 [node name="Medoil4" parent="." instance=ExtResource( 18 )]
 position = Vector2( 2191.06, 183.241 )
 pv_max = 3
-changer_orientation_depart = false
-immovible = false
 
 [node name="Medoil5" parent="." instance=ExtResource( 18 )]
 position = Vector2( 3293.28, 405.765 )
 pv_max = 3
-immovible = false
 
 [node name="Medoil6" parent="." instance=ExtResource( 18 )]
 position = Vector2( 2711.7, 182.313 )
 pv_max = 3
-immovible = false
 
 [connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]
 [connection signal="body_exited" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_exited"]

@@ -6,9 +6,9 @@ func _ready():
 	$VBoxContainer/Commencer.grab_focus()
 
 # Gère le défilement des parallaxes
-func _process(_delta):
-	$ParallaxBackground/ParallaxLayer.motion_offset.x += 0.2
-	$ParallaxBackground/ParallaxLayer2.motion_offset.x -= 0.5
+func _physics_process(_delta):
+	$ParallaxBackground/ParallaxLayer.motion_offset.x += 0.1
+	$ParallaxBackground/ParallaxLayer2.motion_offset.x -= 0.3
 
 func _on_Commencer_pressed():
 	get_tree().change_scene("res://scenes/Intro.tscn")

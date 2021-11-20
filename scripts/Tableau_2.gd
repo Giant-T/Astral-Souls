@@ -26,4 +26,4 @@ func animation_entre():
 
 func _on_Porte_body_entered(body):
 	if body == joueur:
-		get_tree().change_scene("res://scenes/Menu_Principal.tscn")
+		$CameraBoss.current = true

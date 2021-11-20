@@ -741,7 +741,7 @@ anims/Fades = SubResource( 2 )
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="Menu_pause" parent="Au_dela" instance=ExtResource( 17 )]
@@ -952,7 +952,6 @@ margin_bottom = 78.3376
 modulate = Color( 2, 1, 1, 1 )
 position = Vector2( 3669.32, -1027.18 )
 scale = Vector2( 1.6, 1.6 )
-pv_max = 6
 attacking_behavior = true
 
 [node name="Medoil2" parent="." instance=ExtResource( 18 )]

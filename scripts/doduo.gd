@@ -28,7 +28,7 @@ var innactif = true
 
 func _ready():
 	pv = pv_max
-	$Sprite_Doduo.animation = "idle"
+	$Sprite_doduo.animation = "idle"
 	changer_zone()
 	gauche = true
 	immovible = false
@@ -49,8 +49,8 @@ func _physics_process(delta):
 			if pv < pv_max /3 *2:
 				phase = 1
 		elif (phase == 1):
-			if $Sprite_Doduo.animation != "marche":
-				$Sprite_Doduo.animation = "marche"
+			if $Sprite_doduo.animation != "marche":
+				$Sprite_doduo.animation = "marche"
 			recevoir_input()
 			se_deplacer()
 			gauche_droite()
@@ -83,7 +83,7 @@ func gauche_droite():
 		
 
 
-# Reçoit les inputs du Doduo #
+# Reçoit les inputs du doduo #
 func recevoir_input():
 	if (!gauche):
 		velocity.x += acceleration
@@ -92,7 +92,7 @@ func recevoir_input():
 	
 
 
-# Fonction qui gere les deplacements du Doduo #
+# Fonction qui gere les deplacements du doduo #
 func se_deplacer():
 	if (velocity != Vector2.ZERO ):
 		velocity.clamped(vitesse_max)
@@ -130,7 +130,7 @@ func hit():
 	self.set_modulate(Color(1,float(pv)/float(pv_max),float(pv)/float(pv_max)))
 	if(pv< 1):
 		set_physics_process(false)
-		$Sprite_Doduo.animation = "mort"
+		$Sprite_doduo.animation = "mort"
 		joueur_range = false
 		
 #fait disparaitre le mob
@@ -152,11 +152,11 @@ func tirer():
 		get_parent().add_child(balle)
 		minuteur_tir.start()
 			
-func _on_Sprite_Doduo_animation_finished():
-	if $Sprite_Doduo.animation == "mort":
+func _on_Sprite_doduo_animation_finished():
+	if $Sprite_doduo.animation == "mort":
 		mort()
-	elif $Sprite_Doduo.animation == "attack":
-		$Sprite_Doduo.animation = "idle"
+	elif $Sprite_doduo.animation == "attack":
+		$Sprite_doduo.animation = "idle"
 		is_attacking = false
 
 

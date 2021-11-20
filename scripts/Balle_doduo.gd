@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 # Variables #
-var vitesse = 800
+var vitesse = 500
 var velocity = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 var degat

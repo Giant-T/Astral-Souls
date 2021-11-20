@@ -6,7 +6,7 @@
 [ext_resource path="res://ressources/Ennemis/Smhuile/Marche/Smuile_marche_sheet.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12.1042, 9.06635 )
+extents = Vector2( 12.1042, 8.52721 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -25,64 +25,64 @@ atlas = ExtResource( 1 )
 region = Rect2( 141, 0, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 47, 0, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 50, 47, 50 )
+atlas = ExtResource( 4 )
+region = Rect2( 94, 0, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 47, 50, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 3 )
-region = Rect2( 94, 0, 47, 50 )
+atlas = ExtResource( 4 )
+region = Rect2( 0, 50, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 94, 50, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 3 )
+atlas = ExtResource( 4 )
 region = Rect2( 0, 100, 47, 50 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 3 )
-region = Rect2( 47, 100, 47, 50 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 47, 50 )
 
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 4 )
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 3 )
 region = Rect2( 47, 0, 47, 50 )
 
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 4 )
-region = Rect2( 94, 0, 47, 50 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 4 )
-region = Rect2( 47, 50, 47, 50 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 4 )
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 3 )
 region = Rect2( 0, 50, 47, 50 )
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 4 )
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 3 )
+region = Rect2( 47, 50, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 3 )
+region = Rect2( 94, 0, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 3 )
 region = Rect2( 94, 50, 47, 50 )
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 4 )
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 3 )
 region = Rect2( 0, 100, 47, 50 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 3 )
+region = Rect2( 47, 100, 47, 50 )
 
 [sub_resource type="SpriteFrames" id=21]
 animations = [ {
@@ -91,33 +91,34 @@ animations = [ {
 "name": "idle",
 "speed": 2.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
-"name": "mort",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "marche",
 "speed": 10.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"loop": false,
+"name": "mort",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=22]
+radius = 8.49056
 
-[node name="Medoil" type="KinematicBody2D"]
+[node name="Doduo" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 2 )
 
-[node name="Collision_medoil2" type="CollisionShape2D" parent="."]
+[node name="Collision_doduo" type="CollisionShape2D" parent="."]
 scale = Vector2( 3.737, 5.277 )
 shape = SubResource( 1 )
 
-[node name="Sprite_medoil" type="AnimatedSprite" parent="."]
+[node name="Sprite_doduo" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 21 )
 animation = "marche"
-frame = 1
+frame = 2
 playing = true
 flip_h = true
 
@@ -135,20 +136,20 @@ cast_to = Vector2( 0, 9.921 )
 
 [node name="Hit_box" type="Area2D" parent="."]
 
-[node name="Collision_medoil" type="CollisionShape2D" parent="Hit_box"]
+[node name="Collision_doduo" type="CollisionShape2D" parent="Hit_box"]
 scale = Vector2( 3.737, 5.277 )
 shape = SubResource( 1 )
 
 [node name="Detection" type="Area2D" parent="."]
 
-[node name="Collision_medoil" type="CollisionShape2D" parent="Detection"]
+[node name="Collision_doduo" type="CollisionShape2D" parent="Detection"]
 scale = Vector2( 60, 60 )
 shape = SubResource( 22 )
 
 [node name="Canon" type="Position2D" parent="."]
 position = Vector2( 30.26, 5.862 )
 
-[connection signal="animation_finished" from="Sprite_medoil" to="." method="_on_Sprite_medoil_animation_finished"]
+[connection signal="animation_finished" from="Sprite_doduo" to="." method="_on_Sprite_doduo_animation_finished"]
 [connection signal="body_entered" from="Hit_box" to="." method="_on_Hit_box_body_entered"]
 [connection signal="body_exited" from="Hit_box" to="." method="_on_Hit_box_body_exited"]
 [connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]

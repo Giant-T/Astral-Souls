@@ -28,7 +28,7 @@ var innactif = true
 
 func _ready():
 	pv = pv_max
-	$Sprite_medoil.animation = "idle"
+	$Sprite_doduo.animation = "idle"
 	changer_zone()
 	gauche = true
 	immovible = false
@@ -49,8 +49,8 @@ func _physics_process(delta):
 			if pv < pv_max /3 *2:
 				phase = 1
 		elif (phase == 1):
-			if $Sprite_medoil.animation != "marche":
-				$Sprite_medoil.animation = "marche"
+			if $Sprite_doduo.animation != "marche":
+				$Sprite_doduo.animation = "marche"
 			recevoir_input()
 			se_deplacer()
 			gauche_droite()
@@ -82,7 +82,7 @@ func gauche_droite():
 		
 
 
-# Reçoit les inputs du medoil #
+# Reçoit les inputs du doduo #
 func recevoir_input():
 	if (!gauche):
 		velocity.x += acceleration
@@ -91,7 +91,7 @@ func recevoir_input():
 	
 
 
-# Fonction qui gere les deplacements du medoil #
+# Fonction qui gere les deplacements du doduo #
 func se_deplacer():
 	if (velocity != Vector2.ZERO ):
 		velocity.clamped(vitesse_max)
@@ -125,13 +125,14 @@ func hit():
 	pv -= 1
 	if(pv< 1):
 		set_physics_process(false)
-		$Sprite_medoil.animation = "mort"
+		$Sprite_doduo.animation = "mort"
 		joueur_range = false
-		
-	
+
+
 func mort():
-	self.queue_free()
-	
+	set_physics_process(false)
+	$Hit_box/Collision_doduo.disabled = true
+
 func changer_zone():
 	self.scale.x *=-1
 
@@ -146,12 +147,11 @@ func tirer():
 		balle.start(20, $Canon.global_position,  joueur.global_position)
 		get_parent().add_child(balle)
 		minuteur_tir.start()
-			
-func _on_Sprite_medoil_animation_finished():
-	if $Sprite_medoil.animation == "mort":
+func _on_Sprite_doduo_animation_finished():
+	if $Sprite_doduo.animation == "mort":
 		mort()
-	elif $Sprite_medoil.animation == "attack":
-		$Sprite_medoil.animation = "idle"
+	elif $Sprite_doduo.animation == "attack":
+		$Sprite_doduo.animation = "idle"
 		is_attacking = false
 
 

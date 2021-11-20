@@ -160,7 +160,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 31 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 flip_h = true
 

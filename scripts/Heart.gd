@@ -4,15 +4,9 @@ onready var joueur = get_node_or_null("../Joueur")
 var velocity = Vector2.ZERO
 var pv
 export (int) var pv_max = 99
-export (int) var vitesse_max = 15
-export (float) var deceleration = 0.88
-export (int) var acceleration = 15
 export (int) var damage = 13
 export (int) var balle_degat = 20
 export (bool) var changer_orientation_depart = false
-var immovible = false
-var est_au_sol = false
-var pieds_au_sol = true
 var gauche = false
 const UP_DIRECTION = Vector2(0, -1)
 var joueur_range = false 
@@ -21,107 +15,55 @@ var bobo_joueur = false
 var phase = 0
 
 const Balle = preload("res://scenes/Balle_doduo.tscn")
+const Medoil = preload("res://scenes/medoil_spawnable.tscn")
 var minuteur_tir = null
+var minuteur_medoil = null
 export (float) var delai_balle = 2
+export (float) var delai_medoil = 5
 var peut_tirer = true
+var peut_spawn = true
 var innactif = true
 
 func _ready():
 	pv = pv_max
-	$Sprite_Doduo.animation = "idle"
-	changer_zone()
-	gauche = true
-	immovible = false
+	$Sprite_Heart.animation = "idle"
+	if changer_orientation_depart:
+		changer_zone()
+		gauche = true
 		# minuteur_tir pour le delai de tir #
 	minuteur_tir = Timer.new()
 	minuteur_tir.set_one_shot(true)
 	minuteur_tir.set_wait_time(delai_balle)
 	minuteur_tir.connect("timeout", self, "on_timeout_complete")
 	add_child(minuteur_tir)
+	# minuteur_spawn medoil pour le delai de spawnage des medoil #
+	minuteur_medoil = Timer.new()
+	minuteur_medoil.set_one_shot(true)
+	minuteur_medoil.set_wait_time(delai_medoil)
+	minuteur_medoil.connect("timeout", self, "on_timeout_complete_spawn")
+	add_child(minuteur_medoil)
 	pass
 
 func _physics_process(delta):
 	if !innactif:
 		infliger_degat()
-		collision_pieds_tilemap()
+		tirer()
+		spawner()
 		if(phase == 0):
-			tirer()
-			if pv < pv_max /3 *2:
+			if pv <= pv_max /3 *2:
 				phase = 1
-		elif (phase == 1):
-			if $Sprite_Doduo.animation != "marche":
-				$Sprite_Doduo.animation = "marche"
-			recevoir_input()
-			se_deplacer()
-			gauche_droite()
-			if pv < pv_max /3:
-				phase = 2
-				vitesse_max *= 2
-				acceleration *=2
 				minuteur_tir.set_wait_time(delai_balle/2)
-		else:
-			tirer()
-			recevoir_input()
-			se_deplacer()
-			gauche_droite()
+				minuteur_medoil.set_wait_time(delai_medoil/2)
+		elif (phase == 1):
+			if pv <= pv_max /3:
+				phase = 2
+				minuteur_tir.set_wait_time(delai_balle/4)
+				minuteur_medoil.set_wait_time(delai_medoil/4)
 
-#tourne le le doduo si il frappe un mur un troue ou le joueur
-func gauche_droite():
-	if(!pieds_au_sol):
-		changer_zone()
-		if(gauche):
-			gauche =false
-		else:
-			gauche = true
-	elif($Face.is_colliding()):
-		if (!$Face.get_collider().name.match("**Joueur****")):
-			changer_zone()
-			if(gauche):
-				gauche =false
-			else:
-				gauche = true
-		
-
-
-# Reçoit les inputs du Doduo #
-func recevoir_input():
-	if (!gauche):
-		velocity.x += acceleration
-	elif (gauche):
-		velocity.x -= acceleration
-	
-
-
-# Fonction qui gere les deplacements du Doduo #
-func se_deplacer():
-	if (velocity != Vector2.ZERO ):
-		velocity.clamped(vitesse_max)
-		move_and_slide(velocity , UP_DIRECTION)
-		for i in get_slide_count():
-			var collision = get_slide_collision(i)
-		est_au_sol = is_on_floor()
-		velocity *= deceleration
-		if (velocity.length() <= 15):
-			velocity = Vector2.ZERO
-
-
-
-
-#regarde si il est au sol
-func collision_pieds_tilemap():
-	if $Pieds.is_colliding():
-		var collider = $Pieds.get_collider()
-		if collider is TileMap:
-			pieds_au_sol = true
-		else:
-			pieds_au_sol = false
-	else:
-		pieds_au_sol = false
 #Inflige des deget au joueur si il passe dans le monstre
 func infliger_degat():
 	if bobo_joueur:
 		joueur.recevoir_degat(damage)
-
 
 
 #quand l'enemy prend une balle devien de plus en plus rouge et meurt a 0 pv
@@ -130,18 +72,24 @@ func hit():
 	self.set_modulate(Color(1,float(pv)/float(pv_max),float(pv)/float(pv_max)))
 	if(pv< 1):
 		set_physics_process(false)
-		$Sprite_Doduo.animation = "mort"
 		joueur_range = false
+		mort()
 		
+	
 #fait disparaitre le mob
 func mort():
 	self.queue_free()
+	
 #retourne le monstre si il es pas du bon coter
 func changer_zone():
 	self.scale.x *=-1
+
 #Timer pour tirer
 func on_timeout_complete():
 	peut_tirer = true
+#Timer pour spawner des slime
+func on_timeout_complete_spawn():
+	peut_spawn = true
 	
 #instancie une balle lorsqu'il peut tirer
 func tirer():
@@ -151,14 +99,15 @@ func tirer():
 		balle.start(20, $Canon.global_position,  joueur.global_position)
 		get_parent().add_child(balle)
 		minuteur_tir.start()
-			
-func _on_Sprite_Doduo_animation_finished():
-	if $Sprite_Doduo.animation == "mort":
-		mort()
-	elif $Sprite_Doduo.animation == "attack":
-		$Sprite_Doduo.animation = "idle"
-		is_attacking = false
-
+#instancie un slime lorsqu'il peut en spawner 1
+func spawner():
+	if peut_spawn:
+		peut_spawn = false
+		var medoil = Medoil.instance()
+		medoil.start(!gauche,$Slime.global_position)
+		get_parent().add_child(medoil)
+		minuteur_medoil.start()
+		
 
 func _on_Hit_box_body_entered(body):
 	if body == joueur:

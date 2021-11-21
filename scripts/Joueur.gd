@@ -4,11 +4,11 @@ extends KinematicBody2D
 var velocity:Vector2 = Vector2.ZERO
 var gravite:Vector2 = Vector2.ZERO
 var knockback:Vector2 = Vector2.ZERO
-export (int) var vitesse_saut = -900
-export (int) var vitesse_max = 250
-export (float) var deceleration = 0.88
-export (int) var acceleration = 40
-export (int) var y_vide = 605
+export (int) var vitesse_saut:int = -900
+export (int) var vitesse_max:int = 250
+export (float) var deceleration:float = 0.88
+export (int) var acceleration:int = 40
+export (int) var y_vide:int = 605
 
 var est_au_sol:bool = false
 var pieds_au_sol:bool = false
@@ -29,7 +29,7 @@ var peut_sauter:bool = false
 # Variables en rapport au tir #
 const Balle = preload("res://scenes/Balle.tscn")
 var minuteur_tir = null
-export (float) var delai_balle = 0.2
+export (float) var delai_balle:float = 0.2
 var peut_tirer:bool = true
 
 func _ready():
@@ -54,13 +54,17 @@ func _physics_process(delta):
 		recevoir_input()
 		changer_animation()
 		changer_collision()
+		position_pieds()
 		bouger_canon()
-		verif_tomber_vide()
+		if (gravite.y > 0):
+			verif_tomber_vide()
 	calc_gravite()
 	se_deplacer()
 
-# Reçoit les inputs du joueur #
 func recevoir_input():
+	"""
+	Sert à recevoir les inputs du joueur et ne retourne rien
+	"""
 	if (Input.is_action_pressed("bas")):
 		accroupi = true
 
@@ -87,17 +91,19 @@ func recevoir_input():
 	else:
 		$Flash_canon.visible = false
 
-# Fonction qui calcul la gravité infliger au joueur #
 func calc_gravite():
+	"""
+	Fonction qui calcul la gravité infliger au joueur
+	"""
 	est_au_sol = is_on_floor()
-	if ((est_au_sol || pieds_au_sol || peut_sauter) && saute):
+	if ((est_au_sol || pieds_au_sol || peut_sauter) && saute): 
 		peut_sauter = false
 		accroupi = false
 		gravite.y = vitesse_saut
 		est_au_sol = false
 		pieds_au_sol = false
 	
-	if (pieds_au_sol || est_au_sol):
+	if (est_au_sol || pieds_au_sol): 
 		gravite.y = 0
 	elif (Input.is_action_just_released("haut") && saute):
 		saute = false
@@ -111,16 +117,24 @@ func calc_gravite():
 		saute = false
 
 func verif_peut_sauter():
-	if (est_au_sol || pieds_au_sol):
+	"""
+	Vérifie si le joueur peut sauter et change la valeur de la variable peut_sauter
+	"""
+	if ((est_au_sol || pieds_au_sol) && minuteur_saut.is_stopped()):
 		peut_sauter = true
 	elif (peut_sauter && minuteur_saut.is_stopped()):
 		minuteur_saut.start()
 
 func reset_saut():
+	"""
+	Reset le saut lorsque le minuteur est fini
+	"""
 	peut_sauter = false
 
-# Fonction qui gere les deplacements du joueur #
 func se_deplacer():
+	"""
+	Fonction qui calcule le mouvement du joueur et le deplace
+	"""
 	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
@@ -130,8 +144,10 @@ func se_deplacer():
 		if (velocity.length() <= 15):
 			velocity = Vector2.ZERO
 
-# Fonction qui s'occupe de changer les animations du joueur #
 func changer_animation():
+	"""
+	Fonction qui change l'animation du joueur
+	"""
 	if (gravite.y == 0):
 		if accroupi:
 			if ($Sprite_joueur.animation != "crouch"):
@@ -141,11 +157,13 @@ func changer_animation():
 		else:
 			$Sprite_joueur.animation = "running"
 			
-	if (!pieds_au_sol && !est_au_sol):
+	if (!est_au_sol && !pieds_au_sol): 
 		$Sprite_joueur.animation = "jump"
 
-# Fonction qui change la collision du joueur selon sa rotation/accroupi #
 func changer_collision():
+	"""
+	Fonction qui déplace et change la grandeur de la collision en fonction de l'animation du joueur
+	"""
 	if ($Sprite_joueur.flip_h):
 		$Collision_joueur.position.x = 3
 	else:
@@ -157,8 +175,10 @@ func changer_collision():
 		$Collision_joueur.shape.extents.y = 30.5
 		$Collision_joueur.position.y = -1
 
-# Fonction qui bouge le canon du joueur selon sa rotaion/accroupi #
 func bouger_canon():
+	"""
+	Fonction qui change la position du canon en fonction de la position/rotation du joueur
+	"""
 	if (!$Sprite_joueur.flip_h):
 		$Canon.position.x = 48
 		$Flash_canon.position.x = 44
@@ -176,12 +196,16 @@ func bouger_canon():
 		$Canon.position.y = -4
 		$Flash_canon.position.y = -4
 
-# S'execute lorsque le timer arrive a zero #
 func on_timeout_complete():
+	"""
+	Fonction qui permet au joueur de tirer seulement lorsque le minuteur de tire est fini
+	"""
 	peut_tirer = true
 
-# Lorsque le joueur tire #
 func tirer():
+	"""
+	Fonction qui génère la balle lorsque le joueur tire
+	"""
 	if peut_tirer:
 		peut_tirer = false
 		var balle = Balle.instance()
@@ -190,16 +214,39 @@ func tirer():
 		minuteur_tir.start()
 
 func collision_pieds_tilemap():
-	if $Pieds.is_colliding():
-		var collider = $Pieds.get_collider()
+	"""
+	Fonction qui détecte la collision des raycasts avec le tilemap
+	"""
+	var pied_droit = false
+	var pied_gauche = false
+	if $Pieds_droit.is_colliding():
+		var collider = $Pieds_droit.get_collider()
 		if collider is TileMap:
-			pieds_au_sol = true
-		else:
-			pieds_au_sol = false
-	else:
-		pieds_au_sol = false
+			pied_droit = true
+	if $Pieds_gauche.is_colliding():
+		var collider = $Pieds_gauche.get_collider()
+		if collider is TileMap:
+			pied_gauche = true
+	pieds_au_sol = pied_droit || pied_gauche
 
-func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knockback = 0):
+func position_pieds():
+	"""
+	Fonction qui déplace les raycasts selon la rotation du sprite
+	"""
+	if ($Sprite_joueur.flip_h):
+		$Pieds_droit.position.x = 17
+		$Pieds_gauche.position.x = -11
+	else:
+		$Pieds_droit.position.x = 11
+		$Pieds_gauche.position.x = -17
+
+func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knockback:float = 0):
+	"""
+	Fonction qui permet au joueur de recevoir des degats
+	degat -- Le nombre de dégat à infliger au joueur
+	position_degat -- La position de la source de degat (sert à savoir d'où provient le knockback)
+	force_knockback -- La force du knockback (elle est multiplié par 500 dans la fonction)
+	"""
 	if !$Sprite_joueur/AnimationPlayer.is_playing():
 		var pv_temp = pv - degat
 		if (pv_temp <= 0):
@@ -212,10 +259,16 @@ func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knoc
 			knockback =  Vector2(force_knockback, 0).rotated(position.angle_to(position_degat) + PI)
 
 func verif_tomber_vide():
+	"""
+	Vérifie si le joueur tombe dans le vide
+	"""
 	if (position.y >= y_vide):
 		mourir()
 
 func mourir():
+	"""
+	Gère la mort du joueur
+	"""
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")

@@ -180,14 +180,19 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 26 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite_joueur"]
 anims/degat = SubResource( 27 )
 
-[node name="Pieds" type="RayCast2D" parent="."]
-position = Vector2( 0, 20 )
+[node name="Pieds_droit" type="RayCast2D" parent="."]
+position = Vector2( 11, 20 )
+enabled = true
+cast_to = Vector2( 0, 9.921 )
+
+[node name="Pieds_gauche" type="RayCast2D" parent="."]
+position = Vector2( -17, 20 )
 enabled = true
 cast_to = Vector2( 0, 9.921 )
 

@@ -18,6 +18,9 @@ var est_mort:bool = false
 
 const UP_DIRECTION:Vector2 = Vector2(0, -1)
 
+# Variables vie
+const ECRAN_MORT = preload("res://scenes/Message_mort.tscn")
+onready var au_dela = get_tree().get_root().get_child(0).get_node_or_null('Au_dela')
 export (int) var pv = 99
 export (int) var pv_max = 99
 
@@ -27,7 +30,7 @@ export (float) var delai_saut = 0.1
 var peut_sauter:bool = false
 
 # Variables en rapport au tir #
-const Balle = preload("res://scenes/Balle.tscn")
+const BALLE = preload("res://scenes/Balle.tscn")
 var minuteur_tir = null
 export (float) var delai_balle:float = 0.2
 var peut_tirer:bool = true
@@ -210,7 +213,8 @@ func tirer():
 	"""
 	if peut_tirer:
 		peut_tirer = false
-		var balle = Balle.instance()
+		$Canon/Tir.play()
+		var balle = BALLE.instance()
 		balle.start($Canon.global_position, $Sprite_joueur.flip_h, accroupi)
 		get_parent().add_child(balle)
 		minuteur_tir.start()
@@ -266,12 +270,16 @@ func verif_tomber_vide():
 	"""
 	if (position.y >= y_vide):
 		mourir()
+		gravite.y = 0
 
 func mourir():
 	"""
 	Gère la mort du joueur
 	"""
 	$Flash_canon.visible = false
+	if (au_dela && !au_dela.has_node("Message_mort")):
+		var ecran_mort = ECRAN_MORT.instance()
+		au_dela.add_child(ecran_mort)
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")

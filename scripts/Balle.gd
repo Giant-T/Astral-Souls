@@ -46,7 +46,7 @@ func gone():
 	Fonction qui arrete le deplacement de la balle et commence les particules
 	"""
 	velocity = Vector2.ZERO
-	$Collision_balle.disabled = true
+	$Collision_balle.set_deferred('disabled', true)
 	$Sprite_balle.visible = false
 	$Particule_tir.emitting = true
 

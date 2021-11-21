@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/heat-vision.mp3-d45d4352831f291ea2164209dcacefaa.mp3str"
+
+[deps]
+
+source_file="res://ressources/Sons/SE/heat-vision.mp3"
+dest_files=[ "res://.import/heat-vision.mp3-d45d4352831f291ea2164209dcacefaa.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

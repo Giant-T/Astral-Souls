@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/Credits.gd" type="Script" id=1]
+[ext_resource path="res://ressources/Styles&Polices/Minecraftia-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ressources/Sons/BGM/EcranTitre.ogg" type="AudioStream" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+extra_spacing_top = 2
+extra_spacing_bottom = 2
+extra_spacing_char = 1
+extra_spacing_space = 2
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "haut-milieu"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 0.3, 1 ),
+"update": 0,
+"values": [ Vector2( 100, -300 ), Vector2( 100, 100 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "milieu-bas"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 0.3, 1 ),
+"update": 0,
+"values": [ Vector2( 100, 100 ), Vector2( 100, 500 ) ]
+}
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 852.0
+margin_bottom = 480.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = -300.0
+margin_right = -100.0
+margin_bottom = -500.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "credits
+"
+text = "credits
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel"]
+anims/haut-milieu = SubResource( 2 )
+anims/milieu-bas = SubResource( 3 )
+
+[node name="Minuteur" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="Musique" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -5.0
+pitch_scale = 1.5
+autoplay = true
+
+[connection signal="timeout" from="Minuteur" to="." method="_on_Minuteur_timeout"]

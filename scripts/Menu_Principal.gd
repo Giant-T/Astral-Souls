@@ -15,3 +15,6 @@ func _on_Commencer_pressed():
 
 func _on_Quitter_pressed():
 	get_tree().quit()
+
+func _on_Credits_pressed():
+	get_tree().change_scene("res://scenes/Credits.tscn")

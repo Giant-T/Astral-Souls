@@ -1,9 +1,9 @@
 extends KinematicBody2D
-onready var joueur = get_node_or_null("../Joueur")
+var particules = load("res://scenes/Particule_Ennemi.tscn")
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var pv
-var pv_max = 5
+var pv_max = 3
 var vitesse_max = 15
 var deceleration = 0.88
 var acceleration = 15
@@ -90,11 +90,20 @@ func collision_pieds_tilemap():
 #inflige des degat au joueur si il rentre en contanct avec le slime
 func infliger_degat():
 	if bobo_joueur:
-		joueur.recevoir_degat(damage)
+		Global.joueur.recevoir_degat(damage)
+
+func emit_particule():
+	var instance_particule = particules.instance()
+	get_tree().current_scene.add_child(instance_particule)
+	instance_particule.scale_to(1)
+	instance_particule.modulate = self.modulate
+	instance_particule.global_position = $Centre.global_position
+	instance_particule.rotation = global_position.angle_to_point(Global.joueur.global_position)
 
 #Fonction qui enleve de la vie si frapper par balle et le tu si 0 pv
 func hit():
 	pv -= 1
+	emit_particule()
 	if(pv< 1):
 		set_physics_process(false)
 		$Sprite_medoil.animation = "mort"
@@ -112,7 +121,7 @@ func attacking():
 		is_attacking=true
 		infliger_degat()
 		if(joueur_range && ($Sprite_medoil.frame == 9 || $Sprite_medoil.frame == 10)):
-			joueur.recevoir_degat(damage)
+			Global.joueur.recevoir_degat(damage)
 
 func _on_Sprite_medoil_animation_finished():
 	if $Sprite_medoil.animation == "mort":
@@ -123,19 +132,19 @@ func _on_Sprite_medoil_animation_finished():
 
 
 func _on_Zone_attack_body_entered(body):
-	if body == joueur:
+	if body == Global.joueur:
 		joueur_range = true
 
 		
 
 
 func _on_Zone_attack_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		joueur_range = false
 
 
 func _on_Hit_box_body_entered(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = true
 	elif body.has_method("gone"):
 		body.gone()
@@ -143,5 +152,5 @@ func _on_Hit_box_body_entered(body):
 
 
 func _on_Hit_box_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = false

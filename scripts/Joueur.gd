@@ -33,6 +33,8 @@ export (float) var delai_balle = 0.2
 var peut_tirer:bool = true
 
 func _ready():
+	Global.joueur = self
+	
 	# minuteur_tir pour le delai de tir #
 	minuteur_tir = Timer.new()
 	minuteur_tir.set_one_shot(true)
@@ -219,3 +221,7 @@ func mourir():
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")
+
+
+func _on_Joueur_tree_exited():
+	Global.joueur = null

@@ -24,18 +24,20 @@ region = Rect2( 534, 0, 178, 246 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 2 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=7]
+radius = 4.41788
 
 [node name="Heart" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 2 )
+balle_degat = 16
 
 [node name="Collision_Heart" type="CollisionShape2D" parent="."]
 scale = Vector2( 3.737, 5.277 )
@@ -45,7 +47,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 6 )
 animation = "idle"
-frame = 2
+speed_scale = 0.5
 playing = true
 flip_h = true
 
@@ -77,7 +79,7 @@ shape = SubResource( 7 )
 position = Vector2( -76.5339, 31.9298 )
 
 [node name="Slime" type="Position2D" parent="."]
-position = Vector2( -189.671, 63.0424 )
+position = Vector2( -246.995, 32.871 )
 
 [connection signal="body_entered" from="Hit_box" to="." method="_on_Hit_box_body_entered"]
 [connection signal="body_exited" from="Hit_box" to="." method="_on_Hit_box_body_exited"]

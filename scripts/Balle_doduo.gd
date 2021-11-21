@@ -6,10 +6,8 @@ var velocity = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 var degat
 
-func start( damage, pos,joueur_position):
+func start(damage):
 	degat = damage
-	self.position = pos
-	self.look_at(joueur_position)
 	velocity = Vector2(vitesse, 0).rotated(self.rotation)
 
 func _physics_process(delta):

@@ -44,27 +44,37 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 69.4388
-margin_right = 269.438
-margin_bottom = 480.0
+margin_left = 69.0
+margin_top = 160.0
+margin_right = 269.0
+margin_bottom = 374.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Commencer" type="Button" parent="VBoxContainer"]
-margin_top = 193.0
-margin_right = 199.0
-margin_bottom = 238.0
+margin_top = 35.0
+margin_right = 200.0
+margin_bottom = 80.0
 theme = ExtResource( 5 )
 custom_constants/hseparation = 0
 text = "Commencer"
 align = 0
 
+[node name="Credits" type="Button" parent="VBoxContainer"]
+margin_top = 84.0
+margin_right = 200.0
+margin_bottom = 129.0
+theme = ExtResource( 5 )
+custom_constants/hseparation = 0
+text = "Crédits"
+align = 0
+
 [node name="Quitter" type="Button" parent="VBoxContainer"]
-margin_top = 242.0
-margin_right = 199.0
-margin_bottom = 287.0
+margin_top = 133.0
+margin_right = 200.0
+margin_bottom = 178.0
 theme = ExtResource( 5 )
 text = "Quitter"
 align = 0
@@ -75,4 +85,5 @@ volume_db = -10.0
 autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/Commencer" to="." method="_on_Commencer_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quitter" to="." method="_on_Quitter_pressed"]

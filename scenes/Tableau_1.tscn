@@ -740,6 +740,7 @@ anims/Fades = SubResource( 2 )
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
+frame = 1
 playing = true
 
 [node name="Menu_pause" parent="Au_dela" instance=ExtResource( 17 )]

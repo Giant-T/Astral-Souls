@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/musBossFinal.ogg-b4565eafddd3953737f99ee510d2bbc4.oggstr"
+
+[deps]
+
+source_file="res://ressources/Sons/BGM/musBossFinal.ogg"
+dest_files=[ "res://.import/musBossFinal.ogg-b4565eafddd3953737f99ee510d2bbc4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -139,6 +139,8 @@ func se_deplacer():
 		velocity.clamped(vitesse_max)
 		gravite.clamped(vitesse_max)
 		move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
+		if (is_on_wall()):
+			velocity.x = 0
 		velocity *= deceleration
 		knockback *= deceleration
 		if (velocity.length() <= 15):
@@ -269,6 +271,7 @@ func mourir():
 	"""
 	Gère la mort du joueur
 	"""
+	$Flash_canon.visible = false
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")

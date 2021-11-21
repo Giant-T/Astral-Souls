@@ -5,7 +5,13 @@ var vitesse = 800
 var velocity = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 
-func start(pos, est_tourne, est_accroupi):
+func start(pos:Vector2, est_tourne:bool, est_accroupi:bool):
+	"""
+	Fonction qui sert a instancier une balle
+	pos -- Vector2 qui represente la position initial de la balle
+	est_tourne -- Represente si le joueur est tourne ainsi que la rotation de la balle
+	est_accroupri --- Indique si la balle doit avoir une rotation aléatoire ou non
+	"""
 	position = pos
 	var rotation_rand = 0
 	if !est_accroupi:
@@ -25,20 +31,27 @@ func _physics_process(delta):
 	if ($Collision_balle.disabled && !$Particule_tir.emitting):
 		queue_free()
 
-# S'occupe du mouvement de la balle #
-func mouvement(delta):
+func mouvement(delta:float):
+	"""
+	Fonction qui deplace la balle en direction de sa rotation
+	"""
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		if (collision.collider.has_method("hit")):
 			collision.collider.hit()
-		velocity = Vector2.ZERO
-		$Collision_balle.disabled = true
-		$Sprite_balle.visible = false
-		$Particule_tir.emitting = true
+		gone()
 
 func gone():
-	queue_free()
+	"""
+	Fonction qui arrete le deplacement de la balle et commence les particules
+	"""
+	velocity = Vector2.ZERO
+	$Collision_balle.disabled = true
+	$Sprite_balle.visible = false
+	$Particule_tir.emitting = true
 
-# Lorsque la balle sort de l'ecran elle est detruite #
 func _on_VisibilityNotifier2D_screen_exited():
-	gone()
+	"""
+	Lorse la balle sort de l'ecran elle se fait detruire
+	"""
+	queue_free()

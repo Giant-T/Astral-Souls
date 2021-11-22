@@ -139,16 +139,15 @@ func se_deplacer():
 	"""
 	Fonction qui calcule le mouvement du joueur et le deplace
 	"""
-	if (velocity != Vector2.ZERO || gravite != Vector2.ZERO):
-		velocity.clamped(vitesse_max)
-		gravite.clamped(vitesse_max)
-		move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
-		if (is_on_wall()):
-			velocity.x = 0
-		velocity *= deceleration
-		knockback *= deceleration
-		if (velocity.length() <= 15):
-			velocity = Vector2.ZERO
+	velocity.clamped(vitesse_max)
+	gravite.clamped(vitesse_max)
+	move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
+	if (is_on_wall()):
+		velocity.x = 0
+	velocity *= deceleration
+	knockback *= deceleration
+	if (velocity.length() <= 15):
+		velocity = Vector2.ZERO
 
 func changer_animation():
 	"""
@@ -284,7 +283,6 @@ func mourir():
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")
-
 
 func _on_Joueur_tree_exited():
 	Global.joueur = null

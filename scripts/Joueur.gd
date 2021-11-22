@@ -36,7 +36,7 @@ var peut_tirer:bool = true
 
 func _ready():
 	Global.joueur = self
-	
+
 	# minuteur_tir pour le delai de tir #
 	minuteur_tir = Timer.new()
 	minuteur_tir.set_one_shot(true)
@@ -51,7 +51,7 @@ func _ready():
 	minuteur_saut.connect("timeout", self, "reset_saut")
 	add_child(minuteur_saut)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	collision_pieds_tilemap()
 	if (!est_mort):
 		verif_peut_sauter()

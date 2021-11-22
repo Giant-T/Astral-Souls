@@ -27,7 +27,7 @@ func _ready():
 		gauche = true
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	collision_pieds_tilemap()
 	infliger_degat()
 	if(joueur_range && pv > 0 && attacking_behavior):

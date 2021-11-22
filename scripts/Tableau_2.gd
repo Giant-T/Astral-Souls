@@ -12,7 +12,7 @@ func _ready():
 	Global.distance_obj_global -= 7300
 	animation_entre()
 
-func _process(delta):
+func _process(_delta):
 	config_camera()
 
 # Continuation de l'animation de l'intro

@@ -41,7 +41,7 @@ func _ready():
 	add_child(minuteur_tir)
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !innactif:
 		infliger_degat()
 		collision_pieds_tilemap()

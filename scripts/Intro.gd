@@ -36,16 +36,14 @@ func charger_dialogues():
 		$Panneau.visible = false
 		# Transition Fade out pour changer l'image
 		$Image/AnimationPlayer.play("Fades")
-		while $Image/AnimationPlayer.is_playing():
-			yield($Image/AnimationPlayer, "animation_finished")
+		yield($Image/AnimationPlayer, "animation_finished")
 		$Image.texture = load(images[index_dialogue])
 		# Si c'est la dernière image, fait apparaître la sprite du joueur.
 		if index_dialogue == dialogues.size()-1:
 			$Texture_joueur.visible = true
 		# Transition Fade in pour afficher la nouvelle image
 		$Image/AnimationPlayer.play_backwards("Fades")
-		while $Image/AnimationPlayer.is_playing():
-			yield($Image/AnimationPlayer, "animation_finished")
+		yield($Image/AnimationPlayer, "animation_finished")
 		$Panneau.visible = true
 		$Panneau/Texte.bbcode_text = dialogues[index_dialogue]
 		$Panneau/Texte.percent_visible = 0
@@ -82,3 +80,7 @@ func _process(_delta):
 
 func _on_Tween_tween_completed(_object, _key):
 	terminee = true
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().change_scene("res://scenes/Tableau_1.tscn")

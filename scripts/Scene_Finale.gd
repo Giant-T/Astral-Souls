@@ -15,7 +15,6 @@ var index_dialogue = 0
 var terminee = false
 export var secondes_par_lettres = 0.03
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_entre()
 

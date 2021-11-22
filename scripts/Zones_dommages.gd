@@ -15,7 +15,6 @@ func _process(_delta):
 	if joueur and ca_pique:
 		joueur.recevoir_degat(degat)
 
-
 func _on_Zones_dommages_body_entered(body):
 	if body == joueur:
 		ca_pique = true

@@ -3,7 +3,6 @@ extends Control
 onready var objectif = get_node_or_null("../../Objectif")
 var distance_objectif
 
-
 func _process(_delta):
 	if Global.joueur:
 		$Interface_PV.visible = true

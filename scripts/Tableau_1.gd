@@ -1,8 +1,5 @@
 extends Node2D
 
-onready var joueur = get_node_or_null("Joueur")
-
-
 var textesTutoriel = [
 	"Utilisez les flèches ou A et D pour vous déplacer.",
 	"Sautez avec flèche vers le haut ou W.",
@@ -60,9 +57,8 @@ func config_camera():
 
 func _process(_delta):
 	config_camera()
-
 func _on_Porte_body_entered(body):
-	if body == joueur:
+	if body == Global.joueur:
 		$Au_dela/Interface/AnimationPlayer.play_backwards("Entree")
 		$Au_dela/Ecran_blanc/AnimationPlayer.play("FadeIn")
 		while $Au_dela/Ecran_blanc/AnimationPlayer.is_playing():

@@ -65,48 +65,48 @@ atlas = ExtResource( 5 )
 region = Rect2( 48, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 4 )
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 4 )
+atlas = ExtResource( 7 )
 region = Rect2( 48, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 4 )
+atlas = ExtResource( 7 )
 region = Rect2( 96, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 48, 48 )
+region = Rect2( 144, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=19]
 atlas = ExtResource( 7 )
-region = Rect2( 48, 0, 48, 48 )
+region = Rect2( 192, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 7 )
-region = Rect2( 96, 0, 48, 48 )
+region = Rect2( 240, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=21]
 atlas = ExtResource( 7 )
-region = Rect2( 144, 0, 48, 48 )
+region = Rect2( 288, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 7 )
-region = Rect2( 192, 0, 48, 48 )
+region = Rect2( 336, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 7 )
-region = Rect2( 240, 0, 48, 48 )
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 7 )
-region = Rect2( 288, 0, 48, 48 )
+atlas = ExtResource( 4 )
+region = Rect2( 48, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 7 )
-region = Rect2( 336, 0, 48, 48 )
+atlas = ExtResource( 4 )
+region = Rect2( 96, 0, 48, 48 )
 
 [sub_resource type="SpriteFrames" id=26]
 animations = [ {
@@ -125,15 +125,15 @@ animations = [ {
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
-"loop": false,
-"name": "crouch",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
 "loop": false,
 "name": "die",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
+"loop": false,
+"name": "crouch",
+"speed": 10.0
 } ]
 
 [sub_resource type="Animation" id=27]
@@ -181,6 +181,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 26 )
 animation = "idle"
+frame = 4
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite_joueur"]

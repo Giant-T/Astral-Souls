@@ -270,7 +270,6 @@ func verif_tomber_vide():
 	"""
 	if (position.y >= y_vide):
 		mourir()
-		gravite.y = 0
 
 func mourir():
 	"""
@@ -279,7 +278,8 @@ func mourir():
 	$Flash_canon.visible = false
 	if (au_dela && !au_dela.has_node("Message_mort")):
 		var ecran_mort = ECRAN_MORT.instance()
-		au_dela.add_child(ecran_mort)
+		ecran_mort.name = 'Message_mort'
+		au_dela.add_child(ecran_mort, true)
 	if ($Sprite_joueur.animation != "die"):
 		est_mort = true
 		$Sprite_joueur.play("die")

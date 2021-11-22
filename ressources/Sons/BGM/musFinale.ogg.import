@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/musFinale.ogg-45c8dc84be86bfcbe6d7d6aa4bd32c96.oggstr"
+
+[deps]
+
+source_file="res://ressources/Sons/BGM/musFinale.ogg"
+dest_files=[ "res://.import/musFinale.ogg-45c8dc84be86bfcbe6d7d6aa4bd32c96.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

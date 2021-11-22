@@ -28,7 +28,7 @@ collision_layer = 0
 script = ExtResource( 2 )
 
 [node name="Sprite_balle" type="AnimatedSprite" parent="."]
-modulate = Color( 9.25, 1.74, 0.58, 1 )
+modulate = Color( 3, 0.2, 0.1, 1 )
 position = Vector2( -0.0662155, -0.0662155 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 3 )

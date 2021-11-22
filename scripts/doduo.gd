@@ -1,12 +1,13 @@
 extends KinematicBody2D
-onready var joueur = get_node_or_null("../Joueur")
+
+var particules = load("res://scenes/Particule_Ennemi.tscn")
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var pv
 export (int) var pv_max = 99
-export (int) var vitesse_max = 15
+export (int) var vitesse_max = 40
 export (float) var deceleration = 0.88
-export (int) var acceleration = 15
+export (int) var acceleration = 40
 export (int) var damage = 13
 export (int) var balle_degat = 20
 export (bool) var changer_orientation_depart = false
@@ -56,8 +57,8 @@ func _physics_process(delta):
 			gauche_droite()
 			if pv < pv_max /3:
 				phase = 2
-				vitesse_max *= 2
-				acceleration *=2
+				vitesse_max /= 1.5
+				acceleration /=1.5
 				minuteur_tir.set_wait_time(delai_balle/2)
 		else:
 			tirer()
@@ -80,8 +81,6 @@ func gauche_droite():
 				gauche =false
 			else:
 				gauche = true
-		
-
 
 # Reçoit les inputs du doduo #
 func recevoir_input():
@@ -89,8 +88,6 @@ func recevoir_input():
 		velocity.x += acceleration
 	elif (gauche):
 		velocity.x -= acceleration
-	
-
 
 # Fonction qui gere les deplacements du doduo #
 func se_deplacer():
@@ -120,13 +117,21 @@ func collision_pieds_tilemap():
 #Inflige des deget au joueur si il passe dans le monstre
 func infliger_degat():
 	if bobo_joueur:
-		joueur.recevoir_degat(damage)
+		Global.joueur.recevoir_degat(damage)
 
-
+func emit_particule():
+	var instance_particule = particules.instance()
+	get_tree().current_scene.add_child(instance_particule)
+	instance_particule.scale_to(1.5)
+	instance_particule.modulate = self.modulate
+	instance_particule.global_position = global_position
+	instance_particule.rotation = global_position.angle_to_point(Global.joueur.global_position)
 
 #quand l'enemy prend une balle devien de plus en plus rouge et meurt a 0 pv
 func hit():
 	pv -= 1
+	var instance_particule = particules.instance()
+	emit_particule()
 	self.set_modulate(Color(1,float(pv)/float(pv_max),float(pv)/float(pv_max)))
 	if(pv< 1):
 		set_physics_process(false)
@@ -135,7 +140,9 @@ func hit():
 		
 #fait disparaitre le mob
 func mort():
-	self.queue_free()
+	set_physics_process(false)
+	$Hit_box/Collision_doduo.disabled = true
+
 #retourne le monstre si il es pas du bon coter
 func changer_zone():
 	self.scale.x *=-1
@@ -148,8 +155,10 @@ func tirer():
 	if peut_tirer:
 		peut_tirer = false
 		var balle = Balle.instance()
-		balle.start(20, $Canon.global_position,  joueur.global_position)
-		get_parent().add_child(balle)
+		balle.position = $Canon.global_position
+		balle.rotation = get_angle_to(Global.joueur.global_position)
+		balle.start(balle_degat)
+		get_tree().current_scene.add_child(balle)
 		minuteur_tir.start()
 			
 func _on_Sprite_doduo_animation_finished():
@@ -161,23 +170,23 @@ func _on_Sprite_doduo_animation_finished():
 
 
 func _on_Hit_box_body_entered(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = true
 	elif body.has_method("gone"):
 		body.gone()
 		self.hit()
 
 func _on_Hit_box_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = false
 
 
 func _on_Detection_body_entered(body):
 	
-	if body == joueur:
+	if body == Global.joueur:
 		innactif = false
 
 
 func _on_Detection_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		innactif = true

@@ -1,7 +1,5 @@
 extends Node2D
 
-onready var joueur = get_node_or_null("Joueur")
-
 # ajuste la camera pour voir plus en avant du personnage
 func config_camera():
 	if $Joueur/Sprite_joueur.flip_h == true:
@@ -10,6 +8,8 @@ func config_camera():
 		$Joueur/Camera2D.offset_h = 1
 
 func _ready():
+	Global.auDela = $Au_dela
+	Global.distance_obj_global -= 7300
 	animation_entre()
 
 func _process(delta):
@@ -30,17 +30,25 @@ func animation_sorti():
 	$Au_dela/Ecran_blanc/AnimationPlayer.play("Fades")
 	while $Au_dela/Ecran_blanc/AnimationPlayer.is_playing():
 		yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
-	get_tree().change_scene("res://scenes/Menu_Principal.tscn")
+	get_tree().change_scene("res://scenes/Tableau_3.tscn")
 
 
 func _on_Porte_body_entered(body):
-	if body == joueur and $Doduo.pv > 0 and $CameraBoss.current == false:
+	if body == Global.joueur and $Doduo.pv > 0 and $CameraBoss.current == false:
 		$Objectif.visible = false
+		$Au_dela/Ecran_blanc/AnimationPlayer.play("FadeIn")
+		yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
 		$CameraBoss.current = true
-	elif body == joueur and $Doduo.pv <= 0 and $Objectif.visible == false:
+		$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("FadeIn")
+		$Musique.stop()
+		$SonBossApparait.play()
+		yield($SonBossApparait, "finished")
+		$MusCombatDoduo.play()
+	elif body == Global.joueur and $Doduo.pv <= 0 and $Objectif.visible == false:
 		if $Objectif/Porte/Arene:
 			$Objectif/Porte/Arene.queue_free()
 		$Objectif.visible = true
-	elif body == joueur and $Doduo.pv <= 0 and $Objectif.visible == true:
+		$MusCombatDoduo.stop()
+	elif body == Global.joueur and $Doduo.pv <= 0 and $Objectif.visible == true:
 		animation_sorti()
 

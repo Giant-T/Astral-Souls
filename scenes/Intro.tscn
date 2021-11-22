@@ -11,7 +11,7 @@
 [ext_resource path="res://ressources/Sons/SE/Teleport1.ogg" type="AudioStream" id=9]
 [ext_resource path="res://ressources/Sons/SE/Teleport2.ogg" type="AudioStream" id=10]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=46]
 resource_name = "FadeIn"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -26,7 +26,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 128.498, 128.498, 128.498, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=47]
 resource_name = "Fades"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -41,7 +41,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=48]
 bg_color = Color( 0.0156863, 0.0117647, 0.0784314, 0.745098 )
 border_width_left = 6
 border_width_top = 6
@@ -53,80 +53,80 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=49]
 size = 18
 extra_spacing_char = 2
 extra_spacing_space = 1
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=5]
-default_font = SubResource( 4 )
+[sub_resource type="Theme" id=50]
+default_font = SubResource( 49 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=51]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 10, 10 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=52]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 10, 10, 10 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 20, 10, 10 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=54]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 30, 10, 10 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="SpriteFrames" id=55]
 animations = [ {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=38]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=39]
 atlas = ExtResource( 6 )
 region = Rect2( 480, 0, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=40]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 480, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=41]
 atlas = ExtResource( 6 )
 region = Rect2( 480, 480, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=42]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 960, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=43]
 atlas = ExtResource( 6 )
 region = Rect2( 480, 960, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=44]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 1440, 480, 480 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=45]
 atlas = ExtResource( 6 )
 region = Rect2( 480, 1440, 480, 480 )
 
-[sub_resource type="SpriteFrames" id=19]
+[sub_resource type="SpriteFrames" id=56]
 animations = [ {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
 } ]
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=57]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -165,7 +165,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 100, 100, 100, 1 ) ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=58]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -179,7 +179,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 128.498, 128.498, 128.498, 1 ) ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=59]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -194,29 +194,29 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="AtlasTexture" id=23]
+[sub_resource type="AtlasTexture" id=60]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=24]
+[sub_resource type="AtlasTexture" id=61]
 atlas = ExtResource( 5 )
 region = Rect2( 48, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=25]
+[sub_resource type="AtlasTexture" id=62]
 atlas = ExtResource( 5 )
 region = Rect2( 96, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=26]
+[sub_resource type="AtlasTexture" id=63]
 atlas = ExtResource( 5 )
 region = Rect2( 144, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=27]
+[sub_resource type="AtlasTexture" id=64]
 atlas = ExtResource( 5 )
 region = Rect2( 192, 0, 48, 48 )
 
-[sub_resource type="SpriteFrames" id=28]
+[sub_resource type="SpriteFrames" id=65]
 animations = [ {
-"frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
+"frames": [ SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -242,8 +242,8 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Image"]
 pause_mode = 1
-anims/FadeIn = SubResource( 1 )
-anims/Fades = SubResource( 2 )
+anims/FadeIn = SubResource( 46 )
+anims/Fades = SubResource( 47 )
 
 [node name="Panneau" type="Panel" parent="."]
 anchor_top = 1.0
@@ -253,7 +253,7 @@ margin_left = 15.0
 margin_top = -155.0
 margin_right = -15.0
 margin_bottom = -9.0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 48 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -266,7 +266,7 @@ margin_top = 18.0
 margin_right = -18.0
 margin_bottom = -18.0
 rect_clip_content = false
-theme = SubResource( 5 )
+theme = SubResource( 50 )
 bbcode_enabled = true
 bbcode_text = "An 20XX, la planète Terre subit un [shake rate=10 level=10]déficit sevère[/shake] en [color=red]hydrocarbures[/color]..."
 text = "An 20XX, la planète Terre subit un déficit sevère en hydrocarbures..."
@@ -280,20 +280,20 @@ __meta__ = {
 [node name="Indicateur" type="AnimatedSprite" parent="Panneau"]
 position = Vector2( 795.64, 122.332 )
 scale = Vector2( 2, 2 )
-frames = SubResource( 10 )
-frame = 1
+frames = SubResource( 55 )
+frame = 2
 playing = true
 
 [node name="Teleportail" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 1e-05, 1e-05 )
-frames = SubResource( 19 )
-frame = 7
+frames = SubResource( 56 )
+frame = 1
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Teleportail"]
-anims/Grandir = SubResource( 20 )
+anims/Grandir = SubResource( 57 )
 
 [node name="Ecran_blanc" type="TextureRect" parent="."]
 modulate = Color( 0, 0, 0, 0 )
@@ -308,14 +308,14 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Ecran_blanc"]
 pause_mode = 1
-anims/FadeIn = SubResource( 21 )
-anims/Fades = SubResource( 22 )
+anims/FadeIn = SubResource( 58 )
+anims/Fades = SubResource( 59 )
 
 [node name="Texture_joueur" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 426, 240 )
 scale = Vector2( 2, 2 )
-frames = SubResource( 28 )
+frames = SubResource( 65 )
 frame = 1
 playing = true
 

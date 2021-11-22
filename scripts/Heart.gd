@@ -1,11 +1,12 @@
 extends KinematicBody2D
-onready var joueur = get_node_or_null("../Joueur")
+
+var particules = load("res://scenes/Particule_Ennemi.tscn")
 # Variables en rapport au mouvement #
 var velocity = Vector2.ZERO
 var pv
 export (int) var pv_max = 99
 export (int) var damage = 13
-export (int) var balle_degat = 20
+export (int) var balle_degat = 10
 export (bool) var changer_orientation_depart = false
 var gauche = false
 const UP_DIRECTION = Vector2(0, -1)
@@ -63,11 +64,19 @@ func _physics_process(delta):
 #Inflige des deget au joueur si il passe dans le monstre
 func infliger_degat():
 	if bobo_joueur:
-		joueur.recevoir_degat(damage)
+		Global.joueur.recevoir_degat(damage)
 
+func emit_particule():
+	var instance_particule = particules.instance()
+	get_tree().current_scene.add_child(instance_particule)
+	instance_particule.scale_to(3)
+	instance_particule.modulate = self.modulate
+	instance_particule.global_position = global_position
+	instance_particule.rotation = global_position.angle_to_point(Global.joueur.global_position)
 
 #quand l'enemy prend une balle devien de plus en plus rouge et meurt a 0 pv
 func hit():
+	emit_particule()
 	pv -= 1
 	self.set_modulate(Color(1,float(pv)/float(pv_max),float(pv)/float(pv_max)))
 	if(pv< 1):
@@ -96,8 +105,10 @@ func tirer():
 	if peut_tirer:
 		peut_tirer = false
 		var balle = Balle.instance()
-		balle.start(20, $Canon.global_position,  joueur.global_position)
-		get_parent().add_child(balle)
+		balle.position = $Canon.global_position
+		balle.rotation = get_angle_to(Global.joueur.global_position)
+		balle.start(balle_degat)
+		get_tree().current_scene.add_child(balle)
 		minuteur_tir.start()
 #instancie un slime lorsqu'il peut en spawner 1
 func spawner():
@@ -110,23 +121,23 @@ func spawner():
 		
 
 func _on_Hit_box_body_entered(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = true
 	elif body.has_method("gone"):
 		body.gone()
 		self.hit()
 
 func _on_Hit_box_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		bobo_joueur = false
 
 
 func _on_Detection_body_entered(body):
 	
-	if body == joueur:
+	if body == Global.joueur:
 		innactif = false
 
 
 func _on_Detection_body_exited(body):
-	if body == joueur:
+	if body == Global.joueur:
 		innactif = true

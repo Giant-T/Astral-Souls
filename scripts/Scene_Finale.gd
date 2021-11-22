@@ -17,11 +17,7 @@ export var secondes_par_lettres = 0.03
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$PanelContainer/AnimationPlayer.play("Vibration")
-	while $PanelContainer/AnimationPlayer.is_playing():
-		yield($PanelContainer/AnimationPlayer, "animation_finished")
-	$PanelContainer/Appel.visible = false
-	charger_dialogues()
+	animation_entre()
 
 func _process(_delta):
 	$PanelContainer/Panel/Indicateur.visible = terminee
@@ -30,6 +26,11 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("ui_accept") and $PanelContainer/Panel/Tween.is_active() :
 		# Passe le défilement du dialogue
 		$PanelContainer/Panel/Tween.seek((dialogues[index_dialogue-1].length()*secondes_par_lettres)-0.01)
+
+# Gère le défilement des parallaxes
+func _physics_process(_delta):
+	$ParallaxBackground/ParallaxLayer.motion_offset.x += 0.1
+	$ParallaxBackground/ParallaxLayer2.motion_offset.x -= 0.3
 
 func charger_dialogues():
 	if index_dialogue < dialogues.size():
@@ -43,10 +44,62 @@ func charger_dialogues():
 		)
 		$PanelContainer/Panel/Tween.start()
 	else:
-		get_tree().change_scene("res://scenes/Menu_Principal.tscn")
+		set_process(false)
+		$PanelContainer/AnimationPlayer.play("Sorti")
+		yield($PanelContainer/AnimationPlayer, "animation_finished")
+		$Rideau/AnimationPlayer.play_backwards("Fades")
+		yield($Rideau/AnimationPlayer, "animation_finished")
+		$VBoxContainer/Abandonner.disabled = false
+		$VBoxContainer/Poser_la_porte.disabled = false
+		$VBoxContainer.visible = true
+		$VBoxContainer/Poser_la_porte.grab_focus()
 		
 	index_dialogue += 1
+
+func animation_entre():
+	$Au_dela/Ecran_blanc.visible = true
+	$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("Fades")
+	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+	$PanelContainer/AnimationPlayer.play("Vibration")
+	yield($PanelContainer/AnimationPlayer, "animation_finished")
+	$PanelContainer/Appel.visible = false
+	charger_dialogues()
+	$MusFinale.play()
+
+func finale_destruction():
+	$MusFinale.stop()
+	$Teleportail/AnimationPlayer.play("Grandir")
+	yield($Teleportail/AnimationPlayer, "animation_finished")
+	$Rideau/AnimationPlayer.play("Destruction")
+	yield($Rideau/AnimationPlayer, "animation_finished")
+	$Sprite_joueur.visible = false
+	$Au_dela/AnimationTextes.play("Destruction")
+	yield($Au_dela/AnimationTextes, "animation_finished")
+	$Au_dela/Ecran_blanc/AnimationPlayer.play("Fades")
+	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+	get_tree().change_scene("res://scenes/Credits.tscn")
+
+func finale_abandon():
+	$MusFinale.stop()
+	$Sprite_joueur.play("die")
+	yield($Sprite_joueur, "animation_finished")
+	$Au_dela/Ecran_blanc/AnimationPlayer.play("Fades")
+	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+	$Au_dela/AnimationTextes.play("Abandon")
+	yield($Au_dela/AnimationTextes, "animation_finished")
+	get_tree().change_scene("res://scenes/Credits.tscn")
 
 func _on_Tween_tween_completed(_object, _key):
 	terminee = true
 
+func _on_Poser_la_porte_pressed():
+	$VBoxContainer/Abandonner.disabled = true
+	$VBoxContainer/Poser_la_porte.disabled = true
+	$VBoxContainer.visible = false
+	finale_destruction()
+
+func _on_Abandonner_pressed():
+	$VBoxContainer/Abandonner.disabled = true
+	$VBoxContainer/Poser_la_porte.disabled = true
+	$VBoxContainer.visible = false
+	finale_abandon()

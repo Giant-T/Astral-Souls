@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/musTab3.ogg-7348ff61d705a46417f54c4934b03f6a.oggstr"
+
+[deps]
+
+source_file="res://ressources/Sons/BGM/musTab3.ogg"
+dest_files=[ "res://.import/musTab3.ogg-7348ff61d705a46417f54c4934b03f6a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

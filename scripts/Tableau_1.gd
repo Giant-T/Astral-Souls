@@ -24,6 +24,7 @@ var imagesTutoriel = [
 ]
 
 func _ready():
+	Global.auDela = $Au_dela
 	init_tutos()
 	set_process(false)
 	animation_entre()

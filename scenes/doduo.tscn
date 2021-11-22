@@ -118,7 +118,7 @@ shape = SubResource( 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 21 )
 animation = "marche"
-frame = 1
+frame = 5
 playing = true
 flip_h = true
 

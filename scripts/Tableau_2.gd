@@ -9,7 +9,7 @@ func config_camera():
 
 func _ready():
 	Global.auDela = $Au_dela
-	Global.distance_obj_global -= 7300
+	Global.distance_obj_global = 4900
 	animation_entre()
 
 func _process(_delta):
@@ -44,11 +44,11 @@ func _on_Porte_body_entered(body):
 		$SonBossApparait.play()
 		yield($SonBossApparait, "finished")
 		$MusCombatDoduo.play()
-	elif body == Global.joueur and $Doduo.pv <= 0 and $Objectif.visible == false:
 		if $Objectif/Porte/Arene:
 			$Objectif/Porte/Arene.queue_free()
-		$Objectif.visible = true
-		$MusCombatDoduo.stop()
 	elif body == Global.joueur and $Doduo.pv <= 0 and $Objectif.visible == true:
 		animation_sorti()
 
+func _on_Doduo_doduomort():
+		$Objectif.visible = true
+		$MusCombatDoduo.stop()

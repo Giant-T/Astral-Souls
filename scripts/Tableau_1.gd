@@ -21,6 +21,7 @@ var imagesTutoriel = [
 ]
 
 func _ready():
+	Global.distance_obj_global = 12200
 	Global.auDela = $Au_dela
 	init_tutos()
 	set_process(false)

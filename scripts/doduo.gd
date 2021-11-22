@@ -20,6 +20,7 @@ var joueur_range = false
 var is_attacking = false 
 var bobo_joueur = false
 var phase = 0
+signal doduomort
 
 const Balle = preload("res://scenes/Balle_doduo.tscn")
 var minuteur_tir = null
@@ -142,6 +143,7 @@ func hit():
 func mort():
 	set_physics_process(false)
 	$Hit_box/Collision_doduo.disabled = true
+	emit_signal("doduomort")
 
 #retourne le monstre si il es pas du bon coter
 func changer_zone():

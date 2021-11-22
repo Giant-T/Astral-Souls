@@ -370,3 +370,4 @@ texture = ExtResource( 13 )
 [connection signal="body_entered" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_entered"]
 [connection signal="body_exited" from="Couche_principale/Zones_dommages" to="Couche_principale/Zones_dommages" method="_on_Zones_dommages_body_exited"]
 [connection signal="body_entered" from="Objectif/Porte" to="." method="_on_Porte_body_entered"]
+[connection signal="doduomort" from="Doduo" to="." method="_on_Doduo_doduomort"]

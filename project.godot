@@ -12,6 +12,9 @@ config_version=4
 
 config/name="Astral- Souls"
 run/main_scene="res://scenes/Menu_Principal.tscn"
+boot_splash/image="res://ressources/Images_intro/Title.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]

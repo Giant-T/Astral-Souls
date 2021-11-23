@@ -105,9 +105,7 @@ func tirer():
 	if peut_tirer:
 		peut_tirer = false
 		var balle = Balle.instance()
-		balle.position = $Canon.global_position
-		balle.rotation = get_angle_to(Global.joueur.global_position)
-		balle.start(balle_degat)
+		balle.start(balle_degat, $Canon.global_position)
 		get_tree().current_scene.add_child(balle)
 		minuteur_tir.start()
 #instancie un slime lorsqu'il peut en spawner 1

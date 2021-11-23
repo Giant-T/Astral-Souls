@@ -15,10 +15,12 @@ func _process(_delta):
 
 func touche_pause():
 	if Input.is_action_just_pressed("pause") and !pause:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause = true
 		get_tree().paused = true
 		$VBoxContainer/Reprendre.grab_focus()
 	elif Input.is_action_just_pressed("pause") and pause:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 		pause = false
 		get_tree().paused = false
 		
@@ -28,5 +30,6 @@ func _on_Quitter_pressed():
 	get_tree().change_scene("res://scenes/Menu_Principal.tscn")
 
 func _on_Reprendre_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	pause = false
 	get_tree().paused = false

@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Global.auDela = $Au_dela
 	Global.distance_obj_global = 4900
 	animation_entre()

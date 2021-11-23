@@ -168,6 +168,7 @@ tile_data = PoolIntArray( -3866473, 1, 0, -3866472, 1, 2, -3866471, 1, 1, -38664
 
 [node name="Zones_dommages" type="Area2D" parent="Couche_principale"]
 script = ExtResource( 12 )
+degat = 10
 
 [node name="Piques_1" type="CollisionShape2D" parent="Couche_principale/Zones_dommages"]
 position = Vector2( 4640.89, -904.258 )
@@ -323,7 +324,7 @@ shape = SubResource( 11 )
 position = Vector2( 7551.69, 360.878 )
 
 [node name="Doduo" parent="." instance=ExtResource( 4 )]
-position = Vector2( 7793.52, 434.367 )
+position = Vector2( 7769.52, 434.367 )
 pv_max = 90
 damage = 15
 balle_degat = 18

@@ -159,7 +159,7 @@ func tirer():
 		peut_tirer = false
 		var balle = Balle.instance()
 		balle.position = $Canon.global_position
-		balle.rotation = get_angle_to(Global.joueur.global_position)
+		balle.rotation = global_position.angle_to(Global.joueur.global_position) + PI
 		balle.start(balle_degat)
 		get_tree().current_scene.add_child(balle)
 		minuteur_tir.start()

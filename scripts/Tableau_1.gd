@@ -21,6 +21,7 @@ var imagesTutoriel = [
 ]
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Global.distance_obj_global = 12200
 	Global.auDela = $Au_dela
 	init_tutos()

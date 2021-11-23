@@ -26,6 +26,7 @@ var terminee = false
 export var secondes_par_lettres = 0.03
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	$Musique.play()
 	charger_dialogues()
 

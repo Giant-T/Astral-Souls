@@ -3,7 +3,6 @@ extends KinematicBody2D
 # Variables en rapport au mouvement #
 var velocity:Vector2 = Vector2.ZERO
 var gravite:Vector2 = Vector2.ZERO
-var knockback:Vector2 = Vector2.ZERO
 export (int) var vitesse_saut:int = -900
 export (int) var vitesse_max:int = 250
 export (float) var deceleration:float = 0.88
@@ -144,11 +143,10 @@ func se_deplacer():
 # warning-ignore:return_value_discarded
 	gravite.clamped(vitesse_max)
 # warning-ignore:return_value_discarded
-	move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
+	move_and_slide(velocity + gravite, UP_DIRECTION)
 	if (is_on_wall()):
 		velocity.x = 0
 	velocity *= deceleration
-	knockback *= deceleration
 	if (velocity.length() <= 15):
 		velocity = Vector2.ZERO
 
@@ -249,7 +247,7 @@ func position_pieds():
 		$Pieds_droit.position.x = 11
 		$Pieds_gauche.position.x = -17
 
-func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knockback:float = 0):
+func recevoir_degat(degat:int):
 	"""
 	Fonction qui permet au joueur de recevoir des degats
 	degat -- Le nombre de dégat à infliger au joueur
@@ -264,8 +262,6 @@ func recevoir_degat(degat:int, position_degat:Vector2 = Vector2.ZERO, force_knoc
 		else:
 			pv = pv_temp
 			$Sprite_joueur/AnimationPlayer.play("degat")
-			force_knockback *= 500
-			knockback =  Vector2(force_knockback, 0).rotated(position.angle_to(position_degat) + PI)
 
 func verif_tomber_vide():
 	"""

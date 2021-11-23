@@ -549,6 +549,7 @@ texture = ExtResource( 8 )
 position = Vector2( 0.425903, 0 )
 z_index = -1
 frames = SubResource( 32 )
+frame = 3
 playing = true
 
 [node name="Porte" type="Area2D" parent="Objectif"]

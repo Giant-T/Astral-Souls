@@ -94,8 +94,10 @@ func recevoir_input():
 func se_deplacer():
 	if (velocity != Vector2.ZERO ):
 		velocity.clamped(vitesse_max)
+# warning-ignore:return_value_discarded
 		move_and_slide(velocity , UP_DIRECTION)
 		for i in get_slide_count():
+# warning-ignore:unused_variable
 			var collision = get_slide_collision(i)
 		est_au_sol = is_on_floor()
 		velocity *= deceleration
@@ -131,7 +133,6 @@ func emit_particule():
 #quand l'enemy prend une balle devien de plus en plus rouge et meurt a 0 pv
 func hit():
 	pv -= 1
-	var instance_particule = particules.instance()
 	emit_particule()
 	self.set_modulate(Color(1,float(pv)/float(pv_max),float(pv)/float(pv_max)))
 	if(pv< 1):

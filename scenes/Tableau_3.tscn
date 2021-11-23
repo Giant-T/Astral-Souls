@@ -547,8 +547,8 @@ texture = ExtResource( 8 )
 
 [node name="Indicateur" type="AnimatedSprite" parent="Objectif"]
 position = Vector2( 0.425903, 0 )
+z_index = -1
 frames = SubResource( 32 )
-frame = 2
 playing = true
 
 [node name="Porte" type="Area2D" parent="Objectif"]

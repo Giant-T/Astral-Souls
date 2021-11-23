@@ -27,7 +27,7 @@ func start(orientation_depart,spawn_pos):
 		gauche = true
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	collision_pieds_tilemap()
 	infliger_degat()
 	if(joueur_range && pv > 0 && attacking_behavior):
@@ -68,8 +68,10 @@ func recevoir_input():
 func se_deplacer():
 	if (velocity != Vector2.ZERO ):
 		velocity.clamped(vitesse_max)
+# warning-ignore:return_value_discarded
 		move_and_slide(velocity , UP_DIRECTION)
 		for i in get_slide_count():
+# warning-ignore:unused_variable
 			var collision = get_slide_collision(i)
 		est_au_sol = is_on_floor()
 		velocity *= deceleration

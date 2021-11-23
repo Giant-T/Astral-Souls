@@ -27,8 +27,10 @@ func _ready():
 	set_process(false)
 	animation_entre()
 
-# Continuation de l'animation de l'intro
 func animation_entre():
+	"""
+	Gère l'enchaînement des animations lors de l'entrée dans la scène
+	"""
 	$Panneaux_tuto/Tutoriel_gauche_droite/Area2D/CollisionShape2D.disabled = true
 	$Au_dela/Ecran_blanc.visible = true
 	$Joueur.visible = false
@@ -44,13 +46,17 @@ func animation_entre():
 	$Joueur.set_physics_process(true)
 	$Panneaux_tuto/Tutoriel_gauche_droite/Area2D/CollisionShape2D.disabled = false
 
-# Configuration des tutoriels
 func init_tutos():
+	"""
+	Configure les tutoriels en leur assignant leur texte et image correspondant.
+	"""
 	for n in range(0, len(textesTutoriel)):
 		$Panneaux_tuto.get_child(n).init(textesTutoriel[n], imagesTutoriel[n])
 
-# ajuste la camera pour voir plus en avant du personnage
 func config_camera():
+	"""
+	Ajuste la caméra pour voir plus en avant du personnage
+	"""
 	if $Joueur/Sprite_joueur.flip_h == true:
 		$Joueur/Camera2D.offset_h = -0.5
 	else:
@@ -58,10 +64,16 @@ func config_camera():
 
 func _process(_delta):
 	config_camera()
+	
 func _on_Porte_body_entered(body):
 	if body == Global.joueur:
+		# Empèche le joueur d'entrer plusieurs fois
+		if $Objectif/Porte:
+			$Objectif/Porte.queue_free()
+			# Animation de sorti
 		$Au_dela/Interface/AnimationPlayer.play_backwards("Entree")
 		$Au_dela/Ecran_blanc/AnimationPlayer.play("FadeIn")
 		while $Au_dela/Ecran_blanc/AnimationPlayer.is_playing():
 			yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://scenes/Tableau_2.tscn")

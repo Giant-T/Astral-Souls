@@ -24,6 +24,7 @@ func touche_pause():
 		
 
 func _on_Quitter_pressed():
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://scenes/Menu_Principal.tscn")
 
 func _on_Reprendre_pressed():

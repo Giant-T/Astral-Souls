@@ -26,12 +26,15 @@ func _process(_delta):
 		# Passe le défilement du dialogue
 		$PanelContainer/Panel/Tween.seek((dialogues[index_dialogue-1].length()*secondes_par_lettres)-0.01)
 
-# Gère le défilement des parallaxes
 func _physics_process(_delta):
+	# Gère le défilement des parallaxes
 	$ParallaxBackground/ParallaxLayer.motion_offset.x += 0.1
 	$ParallaxBackground/ParallaxLayer2.motion_offset.x -= 0.3
 
 func charger_dialogues():
+	"""
+	Gère l'enchaînement des dialogues
+	"""
 	if index_dialogue < dialogues.size():
 		terminee = false
 		$PanelContainer/Panel/RichTextLabel.bbcode_text = dialogues[index_dialogue]
@@ -56,6 +59,9 @@ func charger_dialogues():
 	index_dialogue += 1
 
 func animation_entre():
+	"""
+	Gère l'enchaînement des animations lors de l'entrée dans la scène
+	"""
 	$Au_dela/Ecran_blanc.visible = true
 	$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("Fades")
 	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
@@ -66,6 +72,9 @@ func animation_entre():
 	$MusFinale.play()
 
 func finale_destruction():
+	"""
+	Gère l'enchaînement des animations lors du choix de fin "destruction"
+	"""
 	$MusFinale.stop()
 	$Teleportail/AnimationPlayer.play("Grandir")
 	yield($Teleportail/AnimationPlayer, "animation_finished")
@@ -76,16 +85,26 @@ func finale_destruction():
 	yield($Au_dela/AnimationTextes, "animation_finished")
 	$Au_dela/Ecran_blanc/AnimationPlayer.play("Fades")
 	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://scenes/Credits.tscn")
 
 func finale_abandon():
+	"""
+	Gère l'enchaînement des animations lors du choix de fin "abandon"
+	"""
 	$MusFinale.stop()
+	$Au_dela/Ecran_blanc/AnimationPlayer.play("FadeIn")
+	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
+	$SonTir.play()
+	$Au_dela/Ecran_blanc/AnimationPlayer.play_backwards("FadeIn")
+	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
 	$Sprite_joueur.play("die")
 	yield($Sprite_joueur, "animation_finished")
 	$Au_dela/Ecran_blanc/AnimationPlayer.play("Fades")
 	yield($Au_dela/Ecran_blanc/AnimationPlayer, "animation_finished")
 	$Au_dela/AnimationTextes.play("Abandon")
 	yield($Au_dela/AnimationTextes, "animation_finished")
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://scenes/Credits.tscn")
 
 func _on_Tween_tween_completed(_object, _key):

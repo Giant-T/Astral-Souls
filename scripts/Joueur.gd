@@ -139,8 +139,11 @@ func se_deplacer():
 	"""
 	Fonction qui calcule le mouvement du joueur et le deplace
 	"""
+# warning-ignore:return_value_discarded
 	velocity.clamped(vitesse_max)
+# warning-ignore:return_value_discarded
 	gravite.clamped(vitesse_max)
+# warning-ignore:return_value_discarded
 	move_and_slide(velocity + gravite + knockback, UP_DIRECTION)
 	if (is_on_wall()):
 		velocity.x = 0

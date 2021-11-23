@@ -29,8 +29,10 @@ func _ready():
 	$Musique.play()
 	charger_dialogues()
 
-# Fonction qui voit au bon défilement de l'intro
 func charger_dialogues():
+	"""
+	Gère l'enchaînement des dialogues et des images
+	"""
 	if index_dialogue < dialogues.size():
 		terminee = false
 		$Panneau.visible = false
@@ -66,6 +68,7 @@ func charger_dialogues():
 		$Teleportail1.play()
 		yield($Teleportail1, "finished")
 		yield($Teleportail/AnimationPlayer, "animation_finished")
+# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://scenes/Tableau_1.tscn")
 		
 	index_dialogue += 1
@@ -83,4 +86,5 @@ func _on_Tween_tween_completed(_object, _key):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):
+# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://scenes/Tableau_1.tscn")

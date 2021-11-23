@@ -45,7 +45,7 @@ func _ready():
 	add_child(minuteur_medoil)
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !innactif:
 		infliger_degat()
 		tirer()
